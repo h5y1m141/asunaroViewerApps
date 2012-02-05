@@ -1,0 +1,25 @@
+<h1>jsondb Module</h1>
+<h2>Description</h2>
+<p>A JSONDBRef object. For more information about the DBRef standard see http://www.mongodb.org/display/DOCS/Database+References</p>
+<h2>Functions</h2>
+<p>Following is a reference for the JSONDBRef class. A comprehensive set of working examples can be found in the sample application distributed with this module.</p>
+<h3>resolve()</h3>
+<p>Resolves the linked object from the references collection</p>
+<h4>Properties</h4>
+<ul>
+<li>$ref[string]: the name of the references collection</li>
+<li>$id[string]: the BSON identifier for the linked object in the referenced collection</li>
+</ul>
+<h4>Usage</h4>
+<p><code>javascript
+object = {
+    name: "value",
+    ref: jsondb.factoryDBRef("test", "4ec1d9b58436d00a100c61e6")
+};
+var o = object.ref.resolve();</code></p>
+<h4>Exceptions</h4>
+<h2>Author</h2>
+<p>Daniel Eyles, IRL Gaming
+dan@irlgaming.net</p>
+<h2>License</h2>
+<p>See LICENSE file included in this distribution.</p>

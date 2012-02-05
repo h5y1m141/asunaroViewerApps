@@ -1,0 +1,318 @@
+<h1>jsondb Module</h1>
+<h2>Description</h2>
+<p>A JSONDB collection object</p>
+<h2>Properties</h2>
+<h3>API</h3>
+<p>The API property holds a pointer to the MongoLab REST API connector for the collection (if it has been initialized). The connector object has two functions:</p>
+<ul>
+<li>load: loads data from the MongoLab REST API</li>
+<li>save: saves data back to the MongoLab REST API</li>
+</ul>
+<p>The implementation details for the MongoLab REST API connector are provided in the mongolab.md document.</p>
+<h2>Functions</h2>
+<p>Following is a reference for the JSONDBCollection class. A comprehensive set of working examples can be found in the sample application distributed with this module.</p>
+<h3>open()</h3>
+<p>Loads the collection data from disk.</p>
+<h4>Properties</h4>
+<p>None</p>
+<h4>Exceptions</h4>
+<p>If the signature stored with the data does not match the signature calculated when the collection is loaded the module with return a boolean value of FALSE and fire a JSONDBDataTampered event.
+The implementing application is then able to handle this event internally (e.g. display a message to the user telling them that application data has been tampered with).</p>
+<h3>setAutoCommit(flag[boolean])</h3>
+<p>Tells the collection whether or not to automatically commit data to disk. By default auto-commit is set to false.</p>
+<h4>Properties</h4>
+<ul>
+<li>flag[boolean, required]: a boolean value signifying whether or not auto-commit is enabled</li>
+</ul>
+<h4>Exceptions</h4>
+<p>None</p>
+<h3>sizeOf()</h3>
+<p>Returns the length of the collection as an integer value</p>
+<h4>Properties</h4>
+<p>None</p>
+<h4>Exceptions</h4>
+<p>None</p>
+<h3>getLastInsertId()</h3>
+<p>Returns the ObjectID for the last object inserted into the collection</p>
+<h4>Properties</h4>
+<p>None</p>
+<h4>Exceptions</h4>
+<p>None</p>
+<h3>initializeAPI(host[string], key[string], query[object])</h3>
+<p>Initializes the MongoLab API connector for the collection. This allows you to load documents from a MongoDB collection hosted by MongoLab, the API connector also allows your application to synchronize changes back to the MongoDB collection hosted by MongoLab.</p>
+<h4>Properties</h4>
+<ul>
+<li>host[string, optional]: a string specifying the API host to connect to, by default this is set to api.mongolab.com</li>
+<li>key[string, required]: your MongoLab API key</li>
+<li>query[object, optional]: a query expression object used to filter which objects are returned by the MongoDB collection</li>
+</ul>
+<h4>Exceptions</h4>
+<p>None</p>
+<h3>ensureIndex(definition[object])</h3>
+<p>Creates a B-tree index on the JSONDB collection using the definition provided. Definition objects are represented by a series of key, value pairs with the key representing the object attribute to index and value representing the intended sort order. And example of the usage of this function might be:</p>
+<p><code>javascript
+var collection = jsondb.factory('documents', 'yoursecretkey');
+collection.save({
+    x: 2,
+    y: 3    
+});
+collection.ensureIndex({x:-1, y:1});</code></p>
+<p>This block of code would create an index on the "documents" collection, indexing "x" in descending order and "y" in ascending order. More documentation on indexes can be found in the JSONDBIndex document.</p>
+<h4>properties</h4>
+<ul>
+<li>definition[object, required]: the index definition</li>
+</ul>
+<h4>Exceptions</h4>
+<p>None</p>
+<h3>dropIndex(definition[object])</h3>
+<p>Drops a B-tree index from the JSONDB collection using the definition provided. Definition objects are represented by a series of key, value pairs with the key representing the object attribute to index and value representing the intended sort order. And example of the usage of this function might be:</p>
+<p><code>javascript
+var collection = jsondb.factory('documents', 'yoursecretkey');
+collection.dropIndex({x:-1, y:1});</code></p>
+<h4>Properties</h4>
+<ul>
+<li>definition[object, required]: the index definition</li>
+</ul>
+<h4>Exceptions</h4>
+<p>None</p>
+<h3>clear()</h3>
+<p>Removes all objects from the collection</p>
+<h4>Properties</h4>
+<p>None</p>
+<h4>Exceptions</h4>
+<p>None</p>
+<h3>commit()</h3>
+<p>Commits all changes to the collection to disk.</p>
+<h4>Properties</h4>
+<p>None</p>
+<h4>Exceptions</h4>
+<p>None</p>
+<h3>getAll()</h3>
+<p>Returns all objects contained within the collection as an array</p>
+<h4>Properties</h4>
+<p>None</p>
+<h4>Exceptions</h4>
+<p>None</p>
+<h3>save(value[object])</h3>
+<p>Adds the provided object to the collection. If no $id property exists it will be generated and added to the object in accordance with the BSON ObjectID specification. Objects added to the collection will no be committed to disk until the commit function is called (unless auto-commit is enabled)</p>
+<h4>Properties</h4>
+<ul>
+<li>value[object, required]: the object to store in the collection</li>
+</ul>
+<h4>Usage</h4>
+<pre><code>collection.save({name:"my new object", value:12345});
+</code></pre>
+<h3>Exceptions</h3>
+<p>None</p>
+<h3>find(query[object], conditions[object])</h3>
+<p>Traverses the collection and returns a list of objects matching the provided query predicates and conditions</p>
+<h4>Properties</h4>
+<ul>
+<li>query[object, required]: the query parameters</li>
+<li>conditions[object, optional]: the conditions for the result set</li>
+</ul>
+<h4>Usage</h4>
+<p>The find function gives your application the ability to perform complex queries on the collection, as well as modifying the results returned. Detailed examples of how powerful this function is, and how it should be used are provided in the example application distributed with this module. Below is a quick overview of how the function should be used.</p>
+<p>The query expression object can be thought of as similar to an SQL WHERE clause. It can be used to perform simple of complex queries at any level of the objects within the collection.</p>
+<p>The structure of the query expression object is as follows:</p>
+<p><code>javascript
+{
+    [the name of the object property to query on]: {
+        [the query expression to use]:[the value to query with]
+    }
+}</code></p>
+<p>For example, to retrieve all objects within the collection containing an object property called "i" with a value less than or equal to "5" would look like:</p>
+<p><code>javascript
+{
+    i:{
+        $lte:5
+    }
+}</code></p>
+<p>Query expressions can be compounded in the same object (think of it as an AND clause) or combined conditionally using the $or expression. For example to retrieve all objects within the collection containing objects where i is less than or equal to 5 and greater than or equal to 2:</p>
+<p><code>javascript
+{
+    i:{
+        $lte:5,
+        $gte:2
+    }
+}</code>
+To retrieve all objects within the collection containing objects where i is less than or equal to 5 and greater than or equal to 2, or have a name matching the provided regular expression:</p>
+<p><code>javascript
+{
+    i:{
+        $lte:5,
+        $gte:2
+    },
+    $or:{
+        name:/[^a-zA-Z0-9]/
+    }
+}</code></p>
+<p>Supported expressions within the query object are as follows:</p>
+<ul>
+<li>$eq: compares the object value for equivalency. This expression is the default applied to query expression object properties and can also use regular expressions. </li>
+<li>var o = collection.find({i:{$eq:5}});</li>
+<li>var o = collection.find({i:5});</li>
+<li>
+<p>var o = collection.find({name:/^a+/});</p>
+</li>
+<li>
+<p>$ne: compares the object value for inequivalence (whether or not the objects are not equal to one another)</p>
+</li>
+<li>var o = collection.find({i:{$ne:3}});</li>
+<li>
+<p>var o = collection.find({name:/^b+/})</p>
+</li>
+<li>
+<p>$lte: compares the object value to see if it is less than or equal to the provided value</p>
+</li>
+<li>
+<p>var o = collection.find({i:{$lte:5}});</p>
+</li>
+<li>
+<p>$lt: compares the object value see if it is less than the provided value</p>
+</li>
+<li>
+<p>var o = collection.find({i:{$lt:5}});</p>
+</li>
+<li>
+<p>$gte: compares the object value to see if it is greater than or equal to the provided value</p>
+</li>
+<li>
+<p>var o = collection.find({i:{$gte:5}});</p>
+</li>
+<li>
+<p>$gt: compares the object value to see if it is greater than the provided value</p>
+</li>
+<li>
+<p>var o = collection.find({i:{$gt:5}});</p>
+</li>
+<li>
+<p>$exists: evaluates whether or not an object property exists (or vice-versa)</p>
+</li>
+<li>
+<p>var o = collection.find({i:{$exists:true}})</p>
+</li>
+<li>
+<p>$size: evaluates whether or not the object property has a length matching the provided value. Works for scalar values, arrays, and objects.</p>
+</li>
+<li>
+<p>var o = collection.find({n:{$size:2}});</p>
+</li>
+<li>
+<p>$in: evaluates whether not the object property has a value in the provided array</p>
+</li>
+<li>
+<p>var o = collection.find({i:{$in:[1, 2, 3, 4, 5]}});</p>
+</li>
+<li>
+<p>$within: evaluates whether or not objects fall within a given geo-spatial area defined by a center-point and radius. To take advantage of this feature your object property must be an object with "lat" and "lng" properties.</p>
+</li>
+<li>var o = collection.find({loc:{$within:[[5, 5], 0.9]}});</li>
+</ul>
+<p>The query conditions object provides a facility for mutating the result set of the query by allowing sorting and limit. The conditions expression object uses the same format as the query expression object. Supported expressions within the condition object are as follows:</p>
+<ul>
+<li>$limit: the integer limit for the query</li>
+<li>
+<p>var o = collection.find({i:{$gte:5}}, {$limit:10});</p>
+</li>
+<li>
+<p>$sort: the sorting algorithm to apply to the result set. Possible values are as follows:</p>
+</li>
+<li>-1: descending order</li>
+<li>0: randomized order</li>
+<li>1: ascending order</li>
+<li>2: alphabetic order</li>
+<li>3: reverse order</li>
+<li>var o = collection.find({i:{$gte:5}}, {$sort:{i:-1}});</li>
+</ul>
+<p>Conditions can be combined, for example:</p>
+<pre><code>var o = collection.find({i:10}, {$limit:10, $sort:{j:0}});
+</code></pre>
+<h4>Exceptions</h4>
+<p>None</p>
+<h3>count(query[object])</h3>
+<p>Same as the find function (minus the conditions object), however rather than returning a list of objects it return an integer value representing the length of the result set. You can find of this as a COUNT clause in SQL</p>
+<h4>Properties</h4>
+<ul>
+<li>query[object, required]: see the "find" function</li>
+</ul>
+<h4>Usage</h4>
+<pre><code>var c = collection.count({i:10, j:2, name:/chicken/}); // count objects where i equals 10, j equals 20 and name matches the provided regular expression
+</code></pre>
+<h4>Exceptions</h4>
+<p>None</p>
+<h3>distinct(key[string], query[object])</h3>
+<p>Aggregates all distinct values for a given key within the collection. If a query is provided the collection will use it to filter the objects used in the aggregration loop.</p>
+<h4>Properties</h4>
+<ul>
+<li>key[string, required]: the key to aggregate distinct values for</li>
+<li>query[object, optional]: see the "find" function</li>
+</ul>
+<h4>Usage</h4>
+<pre><code>var d = collection.distinct("name", {i:{$lte:100}}); // get all the distinct values of "name" where i is less than or equal to 100
+</code></pre>
+<h3>Exceptions</h3>
+<p>None</p>
+<h3>update(query[object], updates[object], conditions[object], upsert[boolean])</h3>
+<p>Updates objects with the collection, kind of like an SQL UPDATE clause.</p>
+<h4>Properties</h4>
+<ul>
+<li>query[object, required]: see the "find" function</li>
+<li>updates[object, required]: the update expressions to apply to mutate the collection</li>
+<li>conditions[object, optional]: see the "find" function</li>
+<li>upsert[boolean, optional]: a flag telling the collection whether to create the object property if update clauses don't match</li>
+</ul>
+<h4>Usage</h4>
+<p>Query and condition expression objects are the same as the <strong>find</strong> function.</p>
+<p>The update function gives your application the ability to perform complex updates on the collection. Detailed examples of how powerful this function is, and how it should be used are provided in the example application distributed with this module. Below is a quick overview of how the function should be used.</p>
+<p>The update expression object can be thought of as similar to an SQL UPDATE clause. It can be used to perform simple of complex updates at any level of the objects within the collection.</p>
+<p>The structure of the query expression object is as follows:</p>
+<p><code>javascript
+{
+    [the update expression]: {
+        [the object property to update]:[the value to update with]
+    }
+}</code></p>
+<p>For example, to retrieve all objects within the collection containing an object property called "i" with a value less than or equal to "5" would look like:</p>
+<p><code>javascript
+{
+    $inc:{
+        i:5
+    }
+}</code></p>
+<p>Supported expressions within the update object are as follows:</p>
+<ul>
+<li>$inc: increments the specified object property by the provided amount</li>
+<li>
+<p>collection.update({i:5, j:3}, {$inc:{a:3}}, {$limit:10}, false); // increments the property a by 3 for all objects where i equals 5 and j equals 3. Limits the update to the first 10 objects matched and does not upsert</p>
+</li>
+<li>
+<p>$set: sets the specified object property to the provided value</p>
+</li>
+<li>
+<p>collection.update({i:2}, {$set:{j:3}}); // set j to 3 where i equals 2</p>
+</li>
+<li>
+<p>$unset: removes the specified object property</p>
+</li>
+<li>collection.update({i:2}, {$unset:{j:true}}); // removes the property j from all objects where i equals 2</li>
+</ul>
+<h4>Exceptions</h4>
+<p>None</p>
+<h3>remove(query[object], conditions[object])</h3>
+<p>Same as the find function, however rather than returning a list of objects it removes all objects matching the query expression and conditions (if provided). You can find of this as a DELETE clause in SQL</p>
+<h4>Properties</h4>
+<ul>
+<li>query[object, required]: see the "find" function</li>
+<li>conditions[object, optional]: see the "find" function</li>
+</ul>
+<h4>Usage</h4>
+<pre><code>var o = collection.remove({i:10}); // remove all objects where i is equal to 10
+</code></pre>
+<h4>Exceptions</h4>
+<p>None</p>
+<h2>Author</h2>
+<p>Daniel Eyles, IRL Gaming
+dan@irlgaming.net</p>
+<h2>License</h2>
+<p>See LICENSE file included in this distribution.</p>

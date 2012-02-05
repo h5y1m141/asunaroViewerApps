@@ -1,0 +1,5 @@
+source :gemcutter
+
+gem 'eventmachine'
+gem 'bson'
+gem 'em-mongo', :path => '../../'

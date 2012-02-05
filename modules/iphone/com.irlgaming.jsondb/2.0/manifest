@@ -1,0 +1,17 @@
+#
+# this is your module manifest and used by Titanium
+# during compilation, packaging, distribution, etc.
+#
+version: 2.0
+description: JSONDB
+author: Dan Eyles
+license: See LICENSE file included in this package
+copyright: Copyright (c) 2011 by IRL Gaming PTY LTD
+
+
+# these should not be edited
+name: jsondb
+moduleid: com.irlgaming.jsondb
+guid: 6183d7ac-3890-4eb1-9ff3-5ecbe49dc622
+platform: iphone
+minsdk: 1.7.2
