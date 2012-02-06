@@ -127,7 +127,7 @@ var prop = {
   navBtn:{
     width:30,
     height:30,
-    systemButton: Titanium.UI.iPhone.SystemButton.ACTION
+    systemButton: Titanium.UI.iPhone.SystemButton.REFRESH
   }
 };
 
