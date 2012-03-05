@@ -3,8 +3,8 @@ require 'rubygems'
 require 'nokogiri'
 require 'json'
 require 'open-uri'
-require 'entry.rb'
-
+# require 'entry.rb'
+require 'mongo'
 class Crawler
   def initialize(blogger)
     @blogger = blogger  
@@ -12,7 +12,10 @@ class Crawler
   attr_accessor :html_body, :next_link, :title, :current_page, :result
   
   def run(starturl)
-    entry = Entry.new()
+    # entry = Entry.new()
+    db = Mongo::Connection.from_uri('mongodb://h5y1m141:orih6254@ds029817.mongolab.com:29817/asunaroblog').db('asunaroblog')
+    @items = db.collection('entries')
+
     http = open(
                 starturl,
                 "User-Agent" => "HiroshiOyamadaSpider",
@@ -22,12 +25,13 @@ class Crawler
     
     doc = Nokogiri::HTML(http)
 
-    entry.permalink = starturl
-    entry.blogger = @blogger
+    # entry.permalink = starturl
+    # entry.blogger = @blogger
 
-    entry.title = doc.search('//div[@class="entry"]').search("h1").text
-    entry.html_body = doc.search('//div[@class="entryText"]').inner_html
-    entry.post_date = self.conv_date_formt(doc.search('//p[@class="posted"]').to_html)
+    # entry.title = doc.search('//div[@class="entry"]').search("h1").text
+    # entry.html_body = doc.search('//div[@class="entryText"]').inner_html
+    # entry.post_date = self.conv_date_formt(doc.search('//p[@class="posted"]').to_html)
+    
     # iPhoneアプリ側の処理で文字列化したJSONをがやりやすくなるために、
     # ブロガー名、タイトル、HTML本文などの情報を全て含んだJSONデータを
     # 格納。くわしくは以下
@@ -42,8 +46,18 @@ class Crawler
     # HTML本文中にダブルクォーテーションや改行文字(\n)が
     # あるため、unicode escape 処理を実施しておかないとJSON.parse
     # でエラーになるため以下が必須
-    entry.json = ActiveSupport::JSON.encode(json)
-    entry.save
+    # entry.json = ActiveSupport::JSON.encode(json)
+    # entry.save
+
+    item = {
+      :permalink => starturl,
+      :blogger => @blogger,
+      :title => doc.search('//div[@class="entry"]').search("h1").text,
+      :html_body => doc.search('//div[@class="entryText"]').inner_html,
+      :post_date => self.conv_date_formt(doc.search('//p[@class="posted"]').to_html)
+    }
+
+    @items.insert(item)
     
     @result = doc.search('//p[@class="entrylink"]')
   end

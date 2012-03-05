@@ -19,8 +19,9 @@ get '/entry/:blogger/:timestamp' do
 
   @items.each_with_index do |item,i|
     content_type :json
-    body.push(item.to_json)
-    
+
+    body.push(item.to_json) 
+
   end
   result = '[' + body.join(',') + ']'
   result
@@ -35,6 +36,3 @@ get '/entry/:blogger/:timestamp/list.html' do
   haml :layout
 end
 
-get '/static' do
-  erb :index, layout => false
-end

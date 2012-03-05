@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 require 'rubygems'
 require 'crawler.rb'
-require 'job_queue.rb'
+#require 'job_queue.rb'
 
 
 class Controller
@@ -14,7 +14,7 @@ class Controller
     while url
       crawler.run(url)
       # どのページまでクローリングしたかqueue.save(blogger,url)みたいな感じにすればよい？
-      self.queue(blogger,url)
+      #self.queue(blogger,url)
       
       sleep(2)
       puts crawler.result.text

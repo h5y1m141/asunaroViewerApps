@@ -19,7 +19,6 @@ class Entry
   field :title
   field :html_body
   field :post_date
-  field :json
 end
     
 
