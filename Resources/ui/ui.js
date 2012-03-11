@@ -1,60 +1,59 @@
 var exports = {
-  createEntryRow:function(/* JSON */ entry){
-    var row = Ti.UI.createTableViewRow($$.prop.viewRow);
+  createEntryRow :function(/* JSON */ entry){
+    var self = this;
+    var row = Ti.UI.createTableViewRow($$.viewRow);
     row.data = entry;
     row.addEventListener('click', function(e){
-      var win = Titanium.UI.createWindow($$.prop.entryWin);
-      win.rightNavButton = (function(){
-        var button = Titanium.UI.createButton($$.prop.navBtn);
-	button.addEventListener('click', function() {
-          var twitter = require("/lib/twitter").util;
-          showPostWindow();
-	});
-	return button;
-      })();
-
-      // 以下はエントリ詳細画面のタイトル部分のUI
-      var webViewHeaderContainer = Ti.UI.createLabel($$.prop.webViewHeaderContainer);
-
-      var label = Ti.UI.createLabel($$.prop.webViewLabel);
+      var webViewHeaderContainer = Ti.UI.createLabel($$.webViewHeaderContainer);
+      var label = Ti.UI.createLabel($$.webViewLabel);
       label.text = e.row.data.title;
 
-      var iconIamge = Ti.UI.createImageView($$.prop.iconImage);
+      var iconIamge = Ti.UI.createImageView($$.iconImage);
       iconIamge.image = '/ui/images/' + e.row.data.blogger + '.gif';
-
 
       webViewHeaderContainer.add(iconIamge);
       webViewHeaderContainer.add(label);
 
-      win.add(webViewHeaderContainer);
+      var EntryWin = self.showEntryWindow();
+      EntryWin.add(webViewHeaderContainer);
 
       // 以下はエントリ本文のUI
-      var webViewBody = Ti.UI.createView($$.prop.webViewBody);
-      var webView = Ti.UI.createWebView($$.prop.webView);
+      var webViewBody = Ti.UI.createView($$.webViewBody);
+      var webView = Ti.UI.createWebView($$.webView);
       webView.html = '<html><head><meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1"></head><body>'
       + e.row.data.html_body
       + '</body></html>';
       //webViewBody.add(webView);
-      win.add(webView);
-      tabGroup.activeTab.open(win,{animated:true});
+      EntryWin.add(webView);
+      tabGroup.activeTab.open(EntryWin,{animated:true});
 
     });
-    var title = Ti.UI.createLabel($$.prop.entry);
+    Ti.include('lib/humanedates.js');
+    var updateTime = Ti.UI.createLabel($$.updateTime);
+    updateTime.text = humaneDate(entry.post_date);
+    row.add(updateTime);
+
+    var title = Ti.UI.createLabel($$.entry);
     title.text = entry.title,
     row.add(title);
 
-    var entrySummary = Ti.UI.createLabel($$.prop.entrySummary);
+    var entrySummary = Ti.UI.createLabel($$.entrySummary);
     entrySummary.text = entry.html_body.replace(/<\/?[^>]+>/gi, "");
     row.add(entrySummary);
 
-    var bloggerName = Ti.UI.createLabel($$.prop.bloggerName);
-    bloggerName.text = entry.blogger;
-    row.add(bloggerName);
+    // var bloggerName = Ti.UI.createLabel($$.bloggerName);
+    // bloggerName.text = entry.blogger;
+    // row.add(bloggerName);
 
-    var icon_iamge = Ti.UI.createImageView($$.prop.iconImage);
+    var icon_iamge = Ti.UI.createImageView($$.iconImage);
     icon_iamge.image = '/ui/images/' + entry.blogger + '.gif';
-
     row.add(icon_iamge);
+
+
+    row.className = entry.blogger;
+
+
+
     return row;
   },
   createTableView:function(/* array */ rows){
@@ -63,20 +62,61 @@ var exports = {
     for(var i=0;i<len;i++){
       tableView.appendRow(rows[i]);
     }
-    // tableView.addEventListener('click',function(e){
-    //   var index = e.index;
-    // });
-
     return tableView;
+  },
+  showEntryWindow:function(){
+    var win = Titanium.UI.createWindow($$.entryWin);
+    win.rightNavButton = (function(){
+      var button = Titanium.UI.createButton($$.composeBtn);
+      button.addEventListener('click', function() {
+        // var twitter = require("/lib/twitter").util;
+        // showPostWindow();
+      });
+      return button;
+    })();
+    win.leftNavButton = (function(){
+      var button = Titanium.UI.createButton($$.backBtn);
+      button.addEventListener('click', function() {
+        win.close();
+      });
+      return button;
+    })();
+    win.tabBarHidden = true;
+    // 以下はエントリ詳細画面のタイトル部分のUI
+    return win;
+
+  },
+  createMainWindow :function(){
+    var self = this;
+    win.title = 'あすなろBLOG';
+    win.rigthNavButton = (function(){
+      var button = Titanium.UI.createButton($$.refreshBtn);
+      button.addEventListener('click', function() {
+        //
+      });
+      return button;
+    })();
+
+    tab1.window = win;
+    tabGroup.addTab(tab1);
+    tabGroup.open();
+  },
+  addElement:function(/* Ti.UI.View Object*/ element){
+    return win.add(element);
   }
 };
 
-// private method
+var $$ = require('ui/styles').prop;
+var win = Titanium.UI.createWindow($$.win);
+var tabGroup = Titanium.UI.createTabGroup();
+var tab1 =Titanium.UI.createTab();
 
+// private method
 function showPostWindow(){
-  var tweetWindow = Titanium.UI.createWindow($$.prop.tweetWindow);
+  var $$ = require('ui/styles').prop;
+  var tweetWindow = Titanium.UI.createWindow($$.tweetWindow);
   tweetWindow.barColor = "#000";
-  var closeBtn = Titanium.UI.createButton($$.prop.closeBtn);
+  var closeBtn = Titanium.UI.createButton($$.closeBtn);
   closeBtn.addEventListener('click',function(){
     tweetWindow.close();
   });
