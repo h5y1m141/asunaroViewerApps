@@ -11,7 +11,11 @@ var exports = {
       var iconIamge = Ti.UI.createImageView($$.iconImage);
       iconIamge.image = '/ui/images/' + e.row.data.blogger + '.gif';
 
+      var iconOverrap = Ti.UI.createView($$.iconOverrap);
+
+
       webViewHeaderContainer.add(iconIamge);
+      webViewHeaderContainer.add(iconOverrap);
       webViewHeaderContainer.add(label);
 
       var EntryWin = self.showEntryWindow();
@@ -49,6 +53,8 @@ var exports = {
     icon_iamge.image = '/ui/images/' + entry.blogger + '.gif';
     row.add(icon_iamge);
 
+    var iconOverrap = Ti.UI.createView($$.iconOverrap);
+    row.add(iconOverrap);
 
     row.className = entry.blogger;
 

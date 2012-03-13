@@ -1,15 +1,13 @@
 var theme = {
   color:'#999',
   whiteGray:'#CCC',
-  backgroundColor:'#fff',
-  barColor:'#000',
+  backgroundColor:'#333',
+  barColor:'#D00',
   font:{fontSize:20,fontFamily:'Helvetica Neue'},
   textAlign:'center',
   width:'auto',
   viewIcon:'KS_nav_views.png',
   uiIcon:'KS_nav_ui.png',
-  canvas:'/ui/parts/canvas.png',
-  noise:'/ui/parts/noisePattern.png',
   backgroundGradient: {
     type: 'linear',
     startPoint: { x: '50%', y: '0%' },
@@ -20,6 +18,17 @@ var theme = {
       { color: '#666', offset: 0.75 },
       { color: '#999', offset: 1.0 }
     ]
+  },
+  tableViewGradient: {
+    type: 'linear',
+    startPoint: { x: '50%', y: '0%' },
+    endPoint: { x: '50%', y: '100%' },
+    colors: [
+      { color: '#000', offset: 0.0},
+      { color: '#333', offset: 0.3},
+      { color: '#666', offset: 0.9},
+      { color: '#000', offset: 1.0}
+    ]
   }
 
 
@@ -27,17 +36,20 @@ var theme = {
 var prop = {
   win: {
     backgroundColor:theme.backgroundColor,
-    barColor:theme.barColor
+    barColor:theme.barColor,
+    tabBarHidden:true
   },
   entryWin:{
     backgroundColor:theme.backgroundColor,
     backButtonTitle:'戻る',
     title:'',
-    barColor:theme.barColor
+    barColor:theme.barColor,
+    tabBarHidden:true
   },
   tweetWindow:{
     backgroundColor:theme.backgroundColor,
-    title:'新規tweet'
+    title:'新規tweet',
+    tabBarHidden:true
  },
   label : {
     color:'#FFF',
@@ -46,7 +58,9 @@ var prop = {
   },
   viewRow:{
     width:'auto',
-    backgroundColor:theme.backgroundColor,
+    borderWidth:3,
+    borderColor:'#000',
+    backgroundGradient:theme.tableViewGradient,
     height:80
   },
 
@@ -55,8 +69,8 @@ var prop = {
       fontSize:12
     },
     left:75,
-    color:'#333333',
-    top:30,
+    color:'#fff',
+    top:40,
     width:200,
     height:40
   },
@@ -65,7 +79,7 @@ var prop = {
       fontWeight:'bold',
       fontSize:16
     },
-    color:'#000',
+    color:'#fff',
     left:65,
     top:10,
     width:200,
@@ -75,6 +89,7 @@ var prop = {
     font:{
       fontSize:10
     },
+    color:'#fff',
     left:280,
     top:10,
     width:40,
@@ -92,12 +107,27 @@ var prop = {
   },
   iconImage:{
     left:5,
-    top:5,
+    top:10,
+    borderWidth:1,
+    borderColor:'#222',
+    borderRadius:5,
     width:50,
     height:50
   },
+  iconOverrap:{
+    left:5,
+    top:10,
+    width:50,
+    height:50,
+    /*
+      refrence:http://developer.appcelerator.com/question/132299/how-to-apply-glow-to-an-image
+     */
+    backgroundSelectedColor:'green',
+    opacity:0.5
+  },
   tableView:{
-    backgroundGradient:theme.backgroundGradient
+    backgroundGradient:theme.backgroundGradient,
+    separatorColor: '#333'
   },
   webViewLabel:{
     color:'#663300',
@@ -147,7 +177,7 @@ var prop = {
   backBtn:{
     width:60,
     height:30,
-    systemButton: Titanium.UI.iPhone.SystemButton.BACK
+    title:'戻る'
   },
   composeBtn:{
     width:60,
