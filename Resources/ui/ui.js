@@ -22,12 +22,28 @@ var exports = {
       EntryWin.add(webViewHeaderContainer);
 
       // 以下はエントリ本文のUI
-      var webViewBody = Ti.UI.createView($$.webViewBody);
+
       var webView = Ti.UI.createWebView($$.webView);
-      webView.html = '<html><head><meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1"></head><body>'
+      webView.html = '<html><head><meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1"></head>'
+      +'<script src="http://www.google.com/jsapi"></script>'
+          +'<script> google.load("jquery", "1.3.2");'
+          +'$("a").click(function(e){'
+          +'var url = $(this).attr("href");'
+          +'Titanium.App.fireEvent("linkclick", { url: url });'
+          +'e.preventDefault();'
+      +'});</script>'
+      +'<body>'
       + e.row.data.html_body
       + '</body></html>';
-      //webViewBody.add(webView);
+
+      EntryWin.addEventListener('linkclick',function(e){
+	Ti.API.debug('linkclick:'+e.url);
+        var dialog = Ti.UI.createAlertDialog({
+          title: "独自処理" + e.url
+        });
+        dialog.show();
+      });
+
       EntryWin.add(webView);
       tabGroup.activeTab.open(EntryWin,{animated:true});
 
