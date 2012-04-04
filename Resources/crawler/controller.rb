@@ -1,20 +1,29 @@
 # -*- coding: utf-8 -*-
 require 'rubygems'
 require 'crawler.rb'
-#require 'job_queue.rb'
+require 'job_queue.rb'
 
 
 class Controller
-  def initiazlie
-
+  attr :blogger
+  def initialize(blogger)
+    @blogger = blogger
   end
-  def main(blogger,url)
-    # 初期値のURLを与えた後、そのページ内に次のエントリのリンクがなければurlにnilをセットしてクローラー終了させる
-    crawler = Crawler.new(blogger)
+  
+  def main()
+    url = nil
+    db = Mongo::Connection.from_uri('mongodb://h5y1m141:orih6254@ds031747.mongolab.com:31747/que4crawler').db('que4crawler')
+    lists = db.collection('quelist')
+    lists.find({"blogger" => blogger},{:fields =>["permalink"]}).each{|doc|
+      url= doc["permalink"]
+    }
+
+    crawler = Crawler.new(@blogger)
+
     while url
+      puts url
       crawler.run(url)
-      # どのページまでクローリングしたかqueue.save(blogger,url)みたいな感じにすればよい？
-      #self.queue(blogger,url)
+      self.queue(@blogger,url)
       
       sleep(2)
       puts crawler.result.text
@@ -32,10 +41,8 @@ class Controller
       "permalink" => url,
       "parse_date" => Time.now.strftime("%Y-%m-%d %H:%M:%S") 
     }
-    q.save(que_data)
+    q.push_queue(que_data)
     true
   end
-
-
 end
   
