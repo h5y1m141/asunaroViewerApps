@@ -10,9 +10,12 @@ var actInd = Titanium.UI.createActivityIndicator($$.actInd);
 var tableView = Ti.UI.createTableView($$.tableView);
 
 var exports = {
-  create:function(){
+  init:function(){
     var self = this;
-
+    tableView.addEventListener('click',function(e){
+      alert(e.index);
+      alert(e.row.data.post_date);
+    });
     tableView.addEventListener('scroll',function(e){
       var offset = e.contentOffset.y;
       if (offset <= -65.0 && !pulling){
@@ -62,6 +65,12 @@ var exports = {
     statusLabel.text = "Pull down to refresh...";
     actInd.hide();
     arrow.show();
+  },
+  setTableData:function(/*array*/ data){
+    return tableView.setData(data,{
+      animated:true,
+      animationStyle:Titanium.UI.iPhone.RowAnimationStyle.DOWN
+    });
   }
 };
 

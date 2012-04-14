@@ -1,6 +1,7 @@
 var myApps = {};
 myApps.ui = require('ui/ui');
 myApps.webView = require('ui/webView');
+myApps.tableView = require('ui/tableView');
 myApps.entries = require('model/entries');
 (function(){
   var _ = require('lib/underscore')._;
@@ -12,11 +13,11 @@ myApps.entries = require('model/entries');
       Ti.API.info(entries[i]);
       var row = myApps.ui.createEntryRow(entry);
       rows.push(row);
-      myApps.ui.setTableData(rows);
+      myApps.tableView.setTableData(rows);
     }
   });
 
-  myApps.ui.addElement(myApps.ui.tableView());
+  myApps.ui.addElement(myApps.tableView.init());
   myApps.ui.addElement(myApps.webView.init());
   myApps.ui.createMainWindow();
 
