@@ -1,4 +1,14 @@
+
 var exports = {
+  tableView:function(){
+    return tableView;
+  },
+  setTableData:function(/*array*/ data){
+    return tableView.setData(data,{
+      animated:true,
+      animationStyle:Titanium.UI.iPhone.RowAnimationStyle.RIGHT
+    });
+  },
   createEntryRow :function(/* JSON */ entry){
     var self = this;
     var row = Ti.UI.createTableViewRow($$.viewRow);
@@ -22,12 +32,21 @@ var exports = {
       EntryWin.add(webViewHeaderContainer);
 
       // 以下はエントリ本文のUI
-      var webViewBody = Ti.UI.createView($$.webViewBody);
+
       var webView = Ti.UI.createWebView($$.webView);
-      webView.html = '<html><head><meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1"></head><body>'
+      webView.html = '<html><head><meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1"></head>'
+      +'<body>'
       + e.row.data.html_body
       + '</body></html>';
-      //webViewBody.add(webView);
+
+      EntryWin.addEventListener('linkclick',function(e){
+	Ti.API.debug('linkclick:'+e.url);
+        var dialog = Ti.UI.createAlertDialog({
+          title: "独自処理" + e.url
+        });
+        dialog.show();
+      });
+
       EntryWin.add(webView);
       tabGroup.activeTab.open(EntryWin,{animated:true});
 
@@ -64,6 +83,7 @@ var exports = {
   },
   createTableView:function(/* array */ rows){
     var tableView = Ti.UI.createTableView($$.tableView);
+
     var len = rows.length;
     for(var i=0;i<len;i++){
       tableView.appendRow(rows[i]);
@@ -116,7 +136,7 @@ var $$ = require('ui/styles').prop;
 var win = Titanium.UI.createWindow($$.win);
 var tabGroup = Titanium.UI.createTabGroup();
 var tab1 =Titanium.UI.createTab();
-
+var tableView = Ti.UI.createTableView($$.tableView);
 // private method
 function showPostWindow(){
   var $$ = require('ui/styles').prop;

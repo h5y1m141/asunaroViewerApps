@@ -130,11 +130,11 @@ var prop = {
     separatorColor: '#333'
   },
   webViewLabel:{
-    color:'#663300',
     font:{
       fontWeight:'bold',
-      fontSize:20
+      fontSize:16
     },
+    color:'#fff',
     top:5,
     left:60,
     width:240,
@@ -158,8 +158,7 @@ var prop = {
   webView:{
     top:65,
     left:5,
-    width:310,
-    borderRadius:10
+    width:310
   },
   closeBtn:{
     title:'閉じる'
