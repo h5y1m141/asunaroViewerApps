@@ -1,4 +1,14 @@
+
 var exports = {
+  tableView:function(){
+    return tableView;
+  },
+  setTableData:function(/*array*/ data){
+    return tableView.setData(data,{
+      animated:true,
+      animationStyle:Titanium.UI.iPhone.RowAnimationStyle.RIGHT
+    });
+  },
   createEntryRow :function(/* JSON */ entry){
     var self = this;
     var row = Ti.UI.createTableViewRow($$.viewRow);
@@ -25,13 +35,6 @@ var exports = {
 
       var webView = Ti.UI.createWebView($$.webView);
       webView.html = '<html><head><meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1"></head>'
-      +'<script src="http://www.google.com/jsapi"></script>'
-          +'<script> google.load("jquery", "1.3.2");'
-          +'$("a").click(function(e){'
-          +'var url = $(this).attr("href");'
-          +'Titanium.App.fireEvent("linkclick", { url: url });'
-          +'e.preventDefault();'
-      +'});</script>'
       +'<body>'
       + e.row.data.html_body
       + '</body></html>';
@@ -132,7 +135,7 @@ var $$ = require('ui/styles').prop;
 var win = Titanium.UI.createWindow($$.win);
 var tabGroup = Titanium.UI.createTabGroup();
 var tab1 =Titanium.UI.createTab();
-
+var tableView = Ti.UI.createTableView($$.tableView);
 // private method
 function showPostWindow(){
   var $$ = require('ui/styles').prop;
