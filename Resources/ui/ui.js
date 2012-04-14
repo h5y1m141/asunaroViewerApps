@@ -31,7 +31,8 @@ var exports = {
       var EntryWin = self.showEntryWindow();
       EntryWin.add(webViewHeaderContainer);
 
-      EntryWin.add(insertWebViewContents(e.row.data.html_body));
+      var w = myApps.webView.insertContents(e.row.data.html_body);
+      EntryWin.add(w);
       tabGroup.activeTab.open(EntryWin,{animated:true});
 
     });

@@ -1,5 +1,6 @@
 var myApps = {};
 myApps.ui = require('ui/ui');
+myApps.webView = require('ui/webView');
 myApps.entries = require('model/entries');
 (function(){
   var _ = require('lib/underscore')._;
@@ -16,6 +17,7 @@ myApps.entries = require('model/entries');
   });
 
   myApps.ui.addElement(myApps.ui.tableView());
+  myApps.ui.addElement(myApps.webView.init());
   myApps.ui.createMainWindow();
 
 }).call(this);

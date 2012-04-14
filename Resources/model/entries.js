@@ -26,7 +26,7 @@ var exports = {
     initJSONDB();
     var self = this;
     var localCollection = jsondb.factory('localJSONDB', 'asunaroblog');
-    alert(localCollection.count({blogger:{$eq:blogger}}));
+    // alert(localCollection.count({blogger:{$eq:blogger}}));
     var count = localCollection.count({blogger:{$eq:blogger}});
     if(count >= 1){
       var entries = localCollection.find(
