@@ -4,7 +4,7 @@ myApps.entries = require('model/entries');
 (function(){
   var _ = require('lib/underscore')._;
   var entries;
-  myApps.entries.load('uehara',function(entries){
+  myApps.entries.load('oyamada',function(entries){
     var rows = [];
     for(var i=0;i<entries.length;i++){
       var entry = entries[i];

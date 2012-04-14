@@ -35,11 +35,11 @@ var exports = {
       );
       callback(sorted(entries));
     }else{
-      self.loadFromMongoLab(callback);
+      self.loadFromMongoLab(blogger,callback);
     }
 
   },
-  loadFromMongoLab:function(callback){
+  loadFromMongoLab:function(blogger,callback){
     if(isConnected){
       initJSONDB();
       var collection = jsondb.factory('asunaroblog:entries','orih6254');
@@ -49,6 +49,7 @@ var exports = {
       Ti.App.addEventListener("JSONDBDownloadSuccess", function(event) {
 
         var entries = collection.find(
+          {blogger:{$eq:blogger}},
           {post_date:{$gt:'2006/10/01'}},
           {$limit:20}
         );
