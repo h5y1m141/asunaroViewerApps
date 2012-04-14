@@ -6,7 +6,7 @@ var exports = {
   setTableData:function(/*array*/ data){
     return tableView.setData(data,{
       animated:true,
-      animationStyle:Titanium.UI.iPhone.RowAnimationStyle.RIGHT
+      animationStyle:Titanium.UI.iPhone.RowAnimationStyle.DOWN
     });
   },
   createEntryRow :function(/* JSON */ entry){
@@ -31,23 +31,7 @@ var exports = {
       var EntryWin = self.showEntryWindow();
       EntryWin.add(webViewHeaderContainer);
 
-      // 以下はエントリ本文のUI
-
-      var webView = Ti.UI.createWebView($$.webView);
-      webView.html = '<html><head><meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1"></head>'
-      +'<body>'
-      + e.row.data.html_body
-      + '</body></html>';
-
-      EntryWin.addEventListener('linkclick',function(e){
-	Ti.API.debug('linkclick:'+e.url);
-        var dialog = Ti.UI.createAlertDialog({
-          title: "独自処理" + e.url
-        });
-        dialog.show();
-      });
-
-      EntryWin.add(webView);
+      EntryWin.add(insertWebViewContents(e.row.data.html_body));
       tabGroup.activeTab.open(EntryWin,{animated:true});
 
     });
@@ -83,7 +67,6 @@ var exports = {
   },
   createTableView:function(/* array */ rows){
     var tableView = Ti.UI.createTableView($$.tableView);
-
     var len = rows.length;
     for(var i=0;i<len;i++){
       tableView.appendRow(rows[i]);
@@ -137,6 +120,15 @@ var win = Titanium.UI.createWindow($$.win);
 var tabGroup = Titanium.UI.createTabGroup();
 var tab1 =Titanium.UI.createTab();
 var tableView = Ti.UI.createTableView($$.tableView);
+tableView.addEventListener('scrollEnd',function(){
+  var last_index = tableView.data[0].rows.length - 1;
+  //alert(last_index);
+});
+tableView.addEventListener('click', function(e){
+  alert(e.index);
+  alert(e.row.data.post_date);
+});
+
 // private method
 function showPostWindow(){
   var $$ = require('ui/styles').prop;
@@ -153,4 +145,13 @@ function showPostWindow(){
     modalStyle:Ti.UI.iPhone.MODAL_PRESENTATION_FORMSHEET
   });
   return tweetWindow;
+}
+
+function insertWebViewContents(/* string */ contents){
+  var webView = Ti.UI.createWebView($$.webView);
+  webView.html = '<html><head><meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1"></head>'
+      +'<body>'
+      + contents
+      + '</body></html>';
+  return webView;
 }
