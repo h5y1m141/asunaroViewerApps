@@ -83,6 +83,7 @@ var exports = {
   },
   createTableView:function(/* array */ rows){
     var tableView = Ti.UI.createTableView($$.tableView);
+
     var len = rows.length;
     for(var i=0;i<len;i++){
       tableView.appendRow(rows[i]);
