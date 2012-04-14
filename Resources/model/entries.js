@@ -41,7 +41,6 @@ var exports = {
   },
   loadFromMongoLab:function(blogger,callback){
     if(isConnected){
-      initJSONDB();
       var collection = jsondb.factory('asunaroblog:entries','orih6254');
       var self = this;
       collection.initializeAPI(hostname,apiKey);
@@ -75,7 +74,7 @@ var exports = {
     }
   },
   save2LocalJSONDB:function(/*json */ entry){
-    initJSONDB();
+
     var localCollection = jsondb.factory('localJSONDB', 'asunaroblog');
     localCollection.save({
       permalink:entry.permalink,
