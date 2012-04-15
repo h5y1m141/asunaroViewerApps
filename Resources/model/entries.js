@@ -29,29 +29,30 @@ var exports = {
     // alert(localCollection.count({blogger:{$eq:blogger}}));
     var count = localCollection.count({blogger:{$eq:blogger}});
     if(count >= 1){
-      var entries = localCollection.find(
-        {blogger:{$eq:blogger}},
-        {$limit:20}
-      );
-      callback(sorted(entries));
+      var entries = localCollection.find({
+        blogger:{$eq:blogger}
+      },{
+        $limit:5
+      });
+      callback(entries);
     }else{
       self.loadFromMongoLab(blogger,callback);
     }
 
   },
-  loadFromMongoLab:function(blogger,callback){
+  loadFromMongoLab:function(/* string */ blogger, /* function */callback){
     if(isConnected){
       var collection = jsondb.factory('asunaroblog:entries','orih6254');
       var self = this;
       collection.initializeAPI(hostname,apiKey);
       collection.API.load();
       Ti.App.addEventListener("JSONDBDownloadSuccess", function(event) {
-
-        var entries = collection.find(
-          {blogger:{$eq:blogger}},
-          {post_date:{$gt:'2006/10/01'}},
-          {$limit:20}
-        );
+        var entries = collection.find({
+          blogger:{$eq:blogger},
+          post_date:{$gt:'2006/10/01'}
+        },{
+          $limit:20
+        });
         var result = sorted(entries);
         for(var i=0;i<result.length;i++){
           self.save2LocalJSONDB(result[i]);
@@ -83,7 +84,25 @@ var exports = {
       post_date:entry.post_date,
       title:entry.title
     });
+    localCollection.ensureIndex({'post_date':1});
     localCollection.commit();
+  },
+  findLocalJSONDB:function(post_date,callback){
+    var localCollection = jsondb.factory('localJSONDB', 'asunaroblog');
+    var entries = localCollection.find({
+      blogger:{$eq:'oyamada'},
+      post_date:{$lt:post_date}
+    },{
+      $limit:5,
+      $sort:{
+        post_date:1
+      }
+    });
+    for(var i=0;i<entries.length;i++){
+      Ti.API.info(entries[i].title);
+    }
+    callback(sorted(entries));
+
   }
 };
 

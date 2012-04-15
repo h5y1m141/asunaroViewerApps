@@ -1,4 +1,3 @@
-
 var exports = {
   tableView:function(){
     return tableView;
@@ -135,13 +134,4 @@ function showPostWindow(){
     modalStyle:Ti.UI.iPhone.MODAL_PRESENTATION_FORMSHEET
   });
   return tweetWindow;
-}
-
-function insertWebViewContents(/* string */ contents){
-  var webView = Ti.UI.createWebView($$.webView);
-  webView.html = '<html><head><meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1"></head>'
-      +'<body>'
-      + contents
-      + '</body></html>';
-  return webView;
 }

@@ -194,6 +194,11 @@ var prop = {
     width:320,
     height:60
   },
+  tableHooter:{
+    backgroundColor:"#996666",
+    width:320,
+    height:60
+  },
   arrow:{
     backgroundImage:"/ui/parts/arrow.png",
     width:23,
