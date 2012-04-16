@@ -76,22 +76,23 @@ var exports = {
 
   },
   createMainWindow :function(){
-    var self = this;
+
     win.title = 'あすなろBLOG';
     win.rightNavButton = (function(){
-      var button = Titanium.UI.createButton($$.composeBtn);
+      var button = Titanium.UI.createButton($$.configBtn);
       button.addEventListener('click', function() {
-        myApps.entries.load('oyamada',function(entries){
-          var rows = [];
-          for(var i=0;i<entries.length;i++){
-            var entry = entries[i];
-            var row = myApps.ui.createEntryRow(entry);
-            rows.push(row);
-            myApps.tableView.setTableData(rows);
-          }
-        });
-        return button;
+        // var twitter = require("/lib/twitter").util;
+        // showPostWindow();
       });
+      return button;
+    })();
+
+    win.leftNavButton = (function(){
+      var button = Titanium.UI.createButton($$.refreshBtn);
+      button.addEventListener('click', function() {
+        win.close();
+      });
+      return button;
     })();
     tab1.window = win;
     tabGroup.addTab(tab1);
@@ -112,8 +113,8 @@ tableView.addEventListener('scrollEnd',function(){
   //alert(last_index);
 });
 tableView.addEventListener('click', function(e){
-  alert(e.index);
-  alert(e.row.data.post_date);
+  // alert(e.index);
+  // alert(e.row.data.post_date);
 });
 
 // private method

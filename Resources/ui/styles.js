@@ -37,7 +37,8 @@ var prop = {
   win: {
     backgroundColor:theme.backgroundColor,
     barColor:theme.barColor,
-    tabBarHidden:true
+    tabBarHidden:true,
+    navBarHidden:false
   },
   entryWin:{
     backgroundColor:theme.backgroundColor,
@@ -182,6 +183,12 @@ var prop = {
     width:60,
     height:30,
     systemButton: Titanium.UI.iPhone.SystemButton.ACTION
+  },
+  configBtn:{
+    width:25,
+    height:25,
+    backgroundImage:'/ui/parts/config.png'
+
   },
   // tableView refresh function
   border:{

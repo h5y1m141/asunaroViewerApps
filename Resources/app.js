@@ -4,7 +4,7 @@ myApps.webView = require('ui/webView');
 myApps.tableView = require('ui/tableView');
 myApps.entries = require('model/entries');
 (function(){
-  var _ = require('lib/underscore')._;
+
   var entries;
   myApps.entries.load('oyamada',function(entries){
     var rows = [];
