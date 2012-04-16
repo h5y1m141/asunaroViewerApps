@@ -5,8 +5,8 @@ var exports = {
   init:function(){
     var self = this;
     tableView.addEventListener('click',function(e){
-      alert(e.index);
-      alert(e.row.data.post_date);
+      // alert(e.index);
+      // alert(e.row.data.post_date);
     });
     tableView.addEventListener('scrollEnd',function(e){
       var last_index = tableView.data[0].rows.length - 1;

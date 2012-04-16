@@ -48,10 +48,9 @@ var exports = {
       collection.API.load();
       Ti.App.addEventListener("JSONDBDownloadSuccess", function(event) {
         var entries = collection.find({
-          blogger:{$eq:blogger},
-          post_date:{$gt:'2006/10/01'}
+          blogger:{$eq:blogger}
         },{
-          $limit:20
+          $limit:10
         });
         var result = sorted(entries);
         for(var i=0;i<result.length;i++){

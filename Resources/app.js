@@ -10,7 +10,7 @@ myApps.entries = require('model/entries');
     var rows = [];
     for(var i=0;i<entries.length;i++){
       var entry = entries[i];
-      Ti.API.info(entries[i]);
+
       var row = myApps.ui.createEntryRow(entry);
       rows.push(row);
       myApps.tableView.setTableData(rows);

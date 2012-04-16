@@ -169,7 +169,7 @@ var prop = {
     systemButton: Titanium.UI.iPhone.SystemButton.ACTION
   },
   refreshBtn:{
-    width:50,
+    width:30,
     height:30,
     systemButton: Titanium.UI.iPhone.SystemButton.REFRESH
   },

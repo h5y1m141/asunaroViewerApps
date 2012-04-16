@@ -1,13 +1,4 @@
 var exports = {
-  tableView:function(){
-    return tableView;
-  },
-  setTableData:function(/*array*/ data){
-    return tableView.setData(data,{
-      animated:true,
-      animationStyle:Titanium.UI.iPhone.RowAnimationStyle.DOWN
-    });
-  },
   createEntryRow :function(/* JSON */ entry){
     var self = this;
     var row = Ti.UI.createTableViewRow($$.viewRow);
@@ -87,14 +78,21 @@ var exports = {
   createMainWindow :function(){
     var self = this;
     win.title = 'あすなろBLOG';
-    win.rigthNavButton = (function(){
-      var button = Titanium.UI.createButton($$.refreshBtn);
+    win.rightNavButton = (function(){
+      var button = Titanium.UI.createButton($$.composeBtn);
       button.addEventListener('click', function() {
-        //
+        myApps.entries.load('oyamada',function(entries){
+          var rows = [];
+          for(var i=0;i<entries.length;i++){
+            var entry = entries[i];
+            var row = myApps.ui.createEntryRow(entry);
+            rows.push(row);
+            myApps.tableView.setTableData(rows);
+          }
+        });
+        return button;
       });
-      return button;
     })();
-
     tab1.window = win;
     tabGroup.addTab(tab1);
     tabGroup.open();
