@@ -1,12 +1,30 @@
 var $$ = require('ui/styles').prop;
-var tableView = Ti.UI.createTableView($$.tableView);
+
 
 var exports = {
-  init:function(){
-    var self = this;
+  init:function(option){
+    var tableViewStyle = option||tableView;
+    var tableView = Ti.UI.createTableView($$[tableViewStyle]);
+
     tableView.addEventListener('click',function(e){
-      // alert(e.index);
-      // alert(e.row.data.post_date);
+      var index = e.index;
+      var row = myApps.ui.createComposeRow();
+      row.rowNum =  index;
+      myApps.uiparts.mainTable.insertRowAfter(index,row,{animationStyle:Titanium.UI.iPhone.RowAnimationStyle.DOWN});
+      row.addEventListener('click',function(e){
+        myApps.ui.tableView.deleteRow(index+1,{animationStyle:Titanium.UI.iPhone.RowAnimationStyle.UP});
+      });
+
+
+      // if(row.sourceNum){
+      //   row.sourceNum = index;
+      // }else{
+      //   myApps.ui.tableView.deleteRow(index+1,{animationStyle:Titanium.UI.iPhone.RowAnimationStyle.UP});
+      //   row.sourceNum =  null;
+      // }
+
+
+
     });
     tableView.addEventListener('scrollEnd',function(e){
       var last_index = tableView.data[0].rows.length - 1;
@@ -28,8 +46,8 @@ var exports = {
     return tableView;
   },
 
-  setTableData:function(/*array*/ data){
-    return tableView.setData(data,{
+  setTableData:function(table,/*array*/ data){
+    return table.setData(data,{
       animated:true,
       animationStyle:Titanium.UI.iPhone.RowAnimationStyle.DOWN
     });
