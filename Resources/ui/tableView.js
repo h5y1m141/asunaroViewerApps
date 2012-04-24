@@ -7,23 +7,13 @@ var exports = {
     var tableView = Ti.UI.createTableView($$[tableViewStyle]);
 
     tableView.addEventListener('click',function(e){
-      var index = e.index;
-      var row = myApps.ui.createComposeRow();
-      row.rowNum =  index;
-      myApps.uiparts.mainTable.insertRowAfter(index,row,{animationStyle:Titanium.UI.iPhone.RowAnimationStyle.DOWN});
-      row.addEventListener('click',function(e){
-        myApps.ui.tableView.deleteRow(index+1,{animationStyle:Titanium.UI.iPhone.RowAnimationStyle.UP});
-      });
-
-
-      // if(row.sourceNum){
-      //   row.sourceNum = index;
-      // }else{
-      //   myApps.ui.tableView.deleteRow(index+1,{animationStyle:Titanium.UI.iPhone.RowAnimationStyle.UP});
-      //   row.sourceNum =  null;
-      // }
-
-
+      // var index = e.index;
+      // var row = myApps.ui.createComposeRow();
+      // row.rowNum =  index;
+      // myApps.ui.mainTable.insertRowAfter(index,row,{animationStyle:Titanium.UI.iPhone.RowAnimationStyle.DOWN});
+      // row.addEventListener('click',function(e){
+      //   myApps.ui.mainTable.deleteRow(index+1,{animationStyle:Titanium.UI.iPhone.RowAnimationStyle.UP});
+      // });
 
     });
     tableView.addEventListener('scrollEnd',function(e){
@@ -36,7 +26,7 @@ var exports = {
           var rows = [];
           var entry = cached[i];
           Ti.API.info('読み込まれたエントリタイトル：'+cached[i].title);
-          var row = myApps.ui.createEntryRow(entry);
+          var row = myApps.ui.util.createEntryRow(entry);
           tableView.appendRow(row,{
             animationStyle:Titanium.UI.iPhone.RowAnimationStyle.DOWN
           });
@@ -44,12 +34,5 @@ var exports = {
       });
     });
     return tableView;
-  },
-
-  setTableData:function(table,/*array*/ data){
-    return table.setData(data,{
-      animated:true,
-      animationStyle:Titanium.UI.iPhone.RowAnimationStyle.DOWN
-    });
   }
 };

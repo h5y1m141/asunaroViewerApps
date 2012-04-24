@@ -10,8 +10,6 @@ var exports = {
     });
 
     row.add(switchBtn);
-
-
     row.text = blogger.name;
     return row;
 
@@ -48,8 +46,34 @@ var exports = {
     var row = Ti.UI.createTableViewRow($$.viewRow);
     row.data = entry;
     row.addEventListener('click', function(e){
+      var webViewHeaderContainer = Ti.UI.createLabel($$.webViewHeaderContainer);
+      var label = Ti.UI.createLabel($$.webViewLabel);
+      label.text = e.row.data.title;
 
+      var iconIamge = Ti.UI.createImageView($$.iconImage);
+      iconIamge.image = '/ui/images/' + e.row.data.blogger + '.gif';
+      iconIamge.backgroundColor = '#cbcbcb';
+      webViewHeaderContainer.add(iconIamge);
+      webViewHeaderContainer.add(label);
+
+      var EntryWin = self.showEntryWindow();
+      EntryWin.add(webViewHeaderContainer);
+      var webView = Ti.UI.createWebView($$.webView);
+
+      // prepare css for iphone
+      var file = Titanium.Filesystem.getFile(Titanium.Filesystem.resourcesDirectory, 'ui/html/main.css');
+      var css = file.read();
+      var htmlHeaderElement = '<html><head><meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1"><style type="text/css">'+ css + '</style></head>';
+
+      webView.html = htmlHeaderElement
+        +'<body>'
+        + e.row.data.html_body
+        + '</body></html>';
+
+      EntryWin.add(webView);
+      tabGroup.activeTab.open(EntryWin,{animated:true});
     });
+
 
     Ti.include('lib/humanedates.js');
     var updateTime = Ti.UI.createLabel($$.updateTime);
@@ -86,7 +110,7 @@ var exports = {
       height:20,
       top:0,
       left:10,
-      image:'/ui/parts/icon_twitter.png',
+      image:'/ui/parts/icon_twitter.png'
     });
     var tweetRTCount = Ti.UI.createLabel({
       width:40,

@@ -177,9 +177,9 @@ var prop = {
       fontSize:16
     },
     color:'#fff',
-    top:5,
-    left:60,
-    width:240,
+    top:10,
+    left:80,
+    width:200,
     height:'auto'
   },
   webViewHeaderContainer:{
@@ -187,20 +187,25 @@ var prop = {
     top:0,
     left:0,
     width:320,
-    height:'auto',
-    backgroundGradient:theme.backgroundGradient
+    height:80,
+    backgroundColor:'#141414'
   },
-  webViewBody:{
+  webViewContainer:{
     backgroundColor:'#CCC',
     top:60,
     left:0,
     width:320,
-    layout:'vertical'
+    height:480,
+    layout:'vertical',
+    zIndex:4,
+    moved:false
   },
   webView:{
     top:65,
-    left:5,
-    width:310
+    left:0,
+    zIndex:5,
+
+    width:320
   },
   closeBtn:{
     title:'閉じる'
