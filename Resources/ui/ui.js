@@ -2,14 +2,37 @@ var exports = {
   createBloggerRow:function(/* json */ blogger){
 
     var row = Ti.UI.createTableViewRow($$.bloggerRow);
-    var switchBtn = Ti.UI.createSwitch($$.switchBtn);
-    switchBtn.blogger = blogger.name;
-    switchBtn.addEventListener('change',function(e){
-      Ti.API.info('Switch value = ' + e.value
-                  + ' act val ' + switchBtn.blogger);
-    });
 
-    row.add(switchBtn);
+    // var switchBtn = Ti.UI.createSwitch($$.switchBtn);
+    // switchBtn.blogger = blogger.name;
+    // switchBtn.addEventListener('change',function(e){
+    //   Ti.API.info('Switch value = ' + e.value
+    //               + ' act val ' + switchBtn.blogger);
+    // });
+    // row.add(switchBtn);
+
+    var iconIamge = Ti.UI.createImageView({
+      width:30,
+      height:30,
+      left:5,
+      top:5
+    });
+    iconIamge.image = '/ui/images/' + blogger.userid + '.gif';
+    row.add(iconIamge);
+
+    var blogTitle = Ti.UI.createLabel({
+      left:40,
+      top:5,
+      width:200,
+      height:'auto',
+      font:{
+        fontSize:12
+      },
+      color:'#FFF',
+      text:blogger.blogTitle
+    });
+    row.add(blogTitle);
+
     row.text = blogger.name;
     return row;
 
@@ -204,25 +227,25 @@ var exports = {
     win.leftNavButton = (function(){
       var button = Titanium.UI.createButton($$.listBtn);
       button.addEventListener('click', function() {
-      Ti.API.info(myApps.uiparts.mainTable.moved);
-      if(!myApps.uiparts.mainTable.moved){
-        myApps.uiparts.mainTable.animate({
+      Ti.API.info(myApps.ui.mainTable.moved);
+      if(!myApps.ui.mainTable.moved){
+        myApps.ui.mainTable.animate({
           duration:180,
           left:200
         });
-        myApps.uiparts.mainTable.moved = true;
+        myApps.ui.mainTable.moved = true;
       }else{
-        myApps.uiparts.mainTable.animate({
+        myApps.ui.mainTable.animate({
           duration:180,
-          left:0
+          left:5
         });
-        myApps.uiparts.mainTable.moved = false;
+        myApps.ui.mainTable.moved = false;
       }
 
       });
       return button;
     })();
-    //win.open();
+
     tab1.window = win;
     tabGroup.addTab(tab1);
     tabGroup.open();

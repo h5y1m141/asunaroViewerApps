@@ -4,6 +4,7 @@ var $$ = require('ui/styles').prop;
 var exports = {
   init:function(option){
     var tableViewStyle = option||tableView;
+    Ti.API.info(tableViewStyle);
     var tableView = Ti.UI.createTableView($$[tableViewStyle]);
 
     tableView.addEventListener('click',function(e){

@@ -79,14 +79,6 @@ var prop = {
     textAlign:theme.textAlign,
     width:theme.width
   },
-  bloggerRow:{
-    width:'auto',
-    borderWidth:2,
-    borderColor:'#999',
-    backgroundGradient:theme.tableViewGradient,
-    color:'#fff',
-    height:60
-  },
 
   entrySummary:{
     font:{
@@ -159,10 +151,21 @@ var prop = {
     left:5,
     top:5
   },
+  bloggerRow:{
+    width:200,
+    borderWidth:2,
+    borderColor:'#999',
+    backgroundColor:'#222',
+    color:'#fff',
+    height:40
+  },
   bloggerTable:{
-    backgroundGradient:theme.tableViewGradient,
-    separatorColor: '#000',
-    zIndex:1
+    backgroundColor:'#222',
+    separatorColor: '#999',
+    zIndex:1,
+    width:310,
+    left:5,
+    top:5
   },
   viewRow:{
     width:'auto',
