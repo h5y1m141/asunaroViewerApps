@@ -58,19 +58,17 @@ var exports = {
 
       var EntryWin = self.showEntryWindow();
       EntryWin.add(webViewHeaderContainer);
-      var webView = Ti.UI.createWebView($$.webView);
-
       // prepare css for iphone
-      var file = Titanium.Filesystem.getFile(Titanium.Filesystem.resourcesDirectory, 'ui/html/main.css');
+      var file = Titanium.Filesystem.getFile(Titanium.Filesystem.resourcesDirectory, '/ui/html/main.css');
       var css = file.read();
       var htmlHeaderElement = '<html><head><meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1"><style type="text/css">'+ css + '</style></head>';
 
-      webView.html = htmlHeaderElement
+      myApps.ui.webView.html = htmlHeaderElement
         +'<body>'
         + e.row.data.html_body
         + '</body></html>';
-
-      EntryWin.add(webView);
+      myApps.ui.webView.show();
+      EntryWin.add(myApps.ui.webView);
       tabGroup.activeTab.open(EntryWin,{animated:true});
     });
 
