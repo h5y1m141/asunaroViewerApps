@@ -268,62 +268,111 @@ var prop = {
     width:320,
     height:60
   },
-  arrow:{
-    backgroundImage:"/ui/parts/arrow.png",
-    width:23,
-    height:60,
-    bottom:10,
-    left:20
-  },
-  statusLabel:{
-    text:"引っ張って更新します",
-    left:55,
-    width:200,
-    bottom:30,
-    height:"auto",
-    color:"#576c89",
-    textAlign:"center",
-    font:{fontSize:13,fontWeight:"bold"},
-    shadowColor:"#999",
-    shadowOffset:{x:0,y:1}
-  },
-  lastUpdatedLabel:{
-    text:"Last Updated: ",
-    left:55,
-    width:200,
-    bottom:15,
-    height:"auto",
-    color:"#576c89",
-    textAlign:"center",
-    font:{fontSize:12},
-    shadowColor:"#999",
-    shadowOffset:{x:0,y:1}
-  },
-  actInd:{
-    left:20,
-    bottom:13,
-    width:30,
-    height:30
-  },
   lightCommentBtn:{
     left:50,
     width:25,
-    height:25
+    height:25,
+    backgroundImage:'/ui/parts/light_comment.png'
   },
   lightMailBtn:{
     left:100,
     width:25,
-    height:25
+    height:25,
+    backgroundImage:'/ui/parts/light_mail.png'
   },
   lightStarBtn:{
     left:150,
     width:25,
-    height:25
+    height:25,
+    backgroundImage:'/ui/parts/light_star.png'
   },
   lightTextBtn:{
     left:200,
     width:25,
+    height:25,
+    backgroundImage:'/ui/parts/light_text.png'
+  },
+  blogTitle:{
+    left:40,
+    top:5,
+    width:200,
+    height:'auto',
+    font:{
+      fontSize:12
+    },
+    color:'#FFF'
+  },
+  bloggerIcon:{
+    width:30,
+    height:30,
+    left:5,
+    top:5
+  },
+  composeRow:{
+    width:'auto',
+    borderWidth:1,
+    backgroundColor:'#898989',
+    height:40
+  },
+  underView:{
+    top:75,
+    left:75,
+    width:200,
     height:25
+  },
+  twitterBtn:{
+    width:20,
+    height:20,
+    top:0,
+    left:10,
+    image:'/ui/parts/icon_twitter.png'
+  },
+  tweetRTCount:{
+    width:40,
+    height:20,
+    top:0,
+    left:40,
+    color:"#898989",
+    font:{
+      fontSize:12
+    },
+    text:"30"
+  },
+  hatebuBtn:{
+    width:20,
+    height:20,
+    top:0,
+    left:90,
+    image:'/ui/parts/icon_hatena.png'
+  },
+  hatebuCount:{
+    width:40,
+    height:20,
+    top:0,
+    left:120,
+    color:"#898989",
+    font:{
+      fontSize:12
+    },
+    text:'200'
+  },
+  facebookBtn:{
+    width:20,
+    height:20,
+    top:0,
+    left:170,
+    image:'/ui/parts/icon_facebook.png'
+  },
+  facebookLikeCount:{
+    width:40,
+    height:20,
+    top:0,
+    left:200,
+    color:"#898989",
+    font:{
+      fontSize:12
+    },
+    text:'200'
   }
 };
 

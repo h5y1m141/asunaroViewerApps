@@ -1,67 +1,44 @@
 var exports = {
   createBloggerRow:function(/* json */ blogger){
 
-    var row = Ti.UI.createTableViewRow($$.bloggerRow);
+    var bloggerRow = Ti.UI.createTableViewRow($$.bloggerRow);
 
-    // var switchBtn = Ti.UI.createSwitch($$.switchBtn);
-    // switchBtn.blogger = blogger.name;
-    // switchBtn.addEventListener('change',function(e){
-    //   Ti.API.info('Switch value = ' + e.value
-    //               + ' act val ' + switchBtn.blogger);
-    // });
-    // row.add(switchBtn);
+    var bloggerIcon = Ti.UI.createImageView($$.bloggerIcon);
+    bloggerIcon.image = '/ui/images/' + blogger.userid + '.gif';
+    bloggerRow.add(bloggerIcon);
 
-    var iconIamge = Ti.UI.createImageView({
-      width:30,
-      height:30,
-      left:5,
-      top:5
+    var blogTitle = Ti.UI.createLabel($$.blogTitle);
+    blogTitle.text = blogger.blogTitle;
+    bloggerRow.add(blogTitle);
+
+    bloggerRow.text = blogger.name;
+    bloggerRow.addEventListener('click',function(e){
+      myApps.ui.mainTable.animate({
+        duration:180,
+        left:5
+      });
+      myApps.ui.mainTable.moved = false;
+      myApps.ui.webView.hide();
     });
-    iconIamge.image = '/ui/images/' + blogger.userid + '.gif';
-    row.add(iconIamge);
-
-    var blogTitle = Ti.UI.createLabel({
-      left:40,
-      top:5,
-      width:200,
-      height:'auto',
-      font:{
-        fontSize:12
-      },
-      color:'#FFF',
-      text:blogger.blogTitle
-    });
-    row.add(blogTitle);
-
-    row.text = blogger.name;
-    return row;
+    return bloggerRow;
 
   },
   createComposeRow :function(){
-    var row = Ti.UI.createTableViewRow({
-      width:'auto',
-      borderWidth:1,
-      backgroundColor:'#898989',
-      height:40
-    });
-    row.showd = true;
+    var composeRow = Ti.UI.createTableViewRow($$.composeRow);
+    composeRow.showd = true;
     var mail = Ti.UI.createImageView($$.lightMailBtn);
-    mail.image = '/ui/parts/light_mail.png';
-    row.add(mail);
+    composeRow.add(mail);
 
     var readLater = Ti.UI.createImageView($$.lightTextBtn);
-    readLater.image = '/ui/parts/light_text.png';
-    row.add(readLater);
+    composeRow.add(readLater);
 
     var star = Ti.UI.createImageView($$.lightStarBtn);
-    star.image = '/ui/parts/light_star.png';
-    row.add(star);
+    composeRow.add(star);
 
     var tweet = Ti.UI.createImageView($$.lightCommentBtn);
-    tweet.image = '/ui/parts/light_comment.png';
-    row.add(tweet);
+    composeRow.add(tweet);
 
-    return row;
+    return composeRow;
 
   },
   createEntryRow :function(/* JSON */ entry){
@@ -120,67 +97,14 @@ var exports = {
     var iconOverrap = Ti.UI.createView($$.iconOverrap);
     row.add(iconOverrap);
 
-    var underView = Ti.UI.createView({
-      top:75,
-      left:75,
-      width:200,
-      height:25
-    });
-    var twitterBtn = Ti.UI.createImageView({
-      width:20,
-      height:20,
-      top:0,
-      left:10,
-      image:'/ui/parts/icon_twitter.png'
-    });
-    var tweetRTCount = Ti.UI.createLabel({
-      width:40,
-      height:20,
-      top:0,
-      left:40,
-      color:"#898989",
-      font:{
-        fontSize:12
-      },
-      text:"30"
-    });
+    var underView = Ti.UI.createView($$.underView);
+    var twitterBtn = Ti.UI.createImageView($$.twitterBtn);
+    var tweetRTCount = Ti.UI.createLabel($$.tweetRTCount);
 
-    var hatebuBtn = Ti.UI.createImageView({
-      width:20,
-      height:20,
-      top:0,
-      left:90,
-      image:'/ui/parts/icon_hatena.png'
-    });
-    var hatebuCount = Ti.UI.createLabel({
-      width:40,
-      height:20,
-      top:0,
-      left:120,
-      color:"#898989",
-      font:{
-        fontSize:12
-      },
-      text:'200'
-    });
-    var facebookBtn = Ti.UI.createImageView({
-      width:20,
-      height:20,
-      top:0,
-      left:170,
-      image:'/ui/parts/icon_facebook.png'
-    });
-    var facebookLikeCount = Ti.UI.createLabel({
-      width:40,
-      height:20,
-      top:0,
-      left:200,
-      color:"#898989",
-      font:{
-        fontSize:12
-      },
-      text:'200'
-    });
+    var hatebuBtn = Ti.UI.createImageView($$.hatebuBtn);
+    var hatebuCount = Ti.UI.createLabel($$.hatebuCount);
+    var facebookBtn = Ti.UI.createImageView($$.facebookBtn);
+    var facebookLikeCount = Ti.UI.createLabel($$.facebookLikeCount);
     underView.add(twitterBtn);
     underView.add(tweetRTCount);
     underView.add(hatebuBtn);
@@ -227,20 +151,22 @@ var exports = {
     win.leftNavButton = (function(){
       var button = Titanium.UI.createButton($$.listBtn);
       button.addEventListener('click', function() {
-      Ti.API.info(myApps.ui.mainTable.moved);
-      if(!myApps.ui.mainTable.moved){
-        myApps.ui.mainTable.animate({
-          duration:180,
-          left:200
-        });
-        myApps.ui.mainTable.moved = true;
-      }else{
-        myApps.ui.mainTable.animate({
-          duration:180,
-          left:5
-        });
-        myApps.ui.mainTable.moved = false;
-      }
+
+        if(!myApps.ui.mainTable.moved){
+          myApps.ui.mainTable.animate({
+            duration:180,
+            left:200
+          });
+          myApps.ui.mainTable.moved = true;
+          myApps.ui.webView.hide();
+        }else{
+          myApps.ui.mainTable.animate({
+            duration:180,
+            left:5
+          });
+          myApps.ui.mainTable.moved = false;
+          myApps.ui.webView.hide();
+        }
 
       });
       return button;
