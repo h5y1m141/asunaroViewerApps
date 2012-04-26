@@ -13,6 +13,14 @@ var exports = {
 
     bloggerRow.text = blogger.name;
     bloggerRow.addEventListener('click',function(e){
+      var row = Ti.UI.createTableViewRow();
+      var data = [];
+      data.push(row);
+      myApps.ui.mainTable.setData(data,{
+        animated:false
+      });
+      myApps.contoller.selectBlogger(blogger.userid);
+
       myApps.ui.mainTable.animate({
         duration:180,
         left:5

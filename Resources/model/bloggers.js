@@ -86,6 +86,14 @@ var bloggers = [
     blogTitle:'家で働くママ日記',
     frequency:2,
     description:'SI系企業で研究部門・パッケージ部門に従事。その後派遣で大手製造業のプロジェクター用マニュアル作成部門に1年冒険。2年ほど前にまたIT系に戻る。現在は2歳児の女の子を育てながら、サービスの開発・企画をやっています。'
+  },
+  {
+    name:'小山田　浩',
+    userid:'oyamada',
+    twitterid:'h5y1m141',
+    blogTitle:'キャリア形成のお手伝い',
+    frequency:2,
+    description:'あなたのキャリア形成のライフプランナーとなるべく日々気づいたことをお届けします。'
   }
 ];
 

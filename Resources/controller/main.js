@@ -1,5 +1,5 @@
 var exports = {
-  main:function(/* string */ blogger){
+  selectBlogger:function(/* string */ blogger){
     myApps.entries.load(blogger,function(entries){
 
       var rows = [];

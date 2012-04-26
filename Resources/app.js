@@ -10,8 +10,8 @@ myApps.contoller = require('controller/main');
 
 
 (function(){
-  var blogger = 'oyamada';
-  myApps.contoller.main(blogger);
+  var blogger = 'uehara';
+  myApps.contoller.selectBlogger(blogger);
   myApps.ui.webView = myApps.ui.util.webView.init();
   myApps.ui.util.addElement(myApps.ui.mainTable);
 
