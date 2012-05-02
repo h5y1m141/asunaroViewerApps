@@ -24,12 +24,11 @@ var exports = {
       myApps.entries.findLocalJSONDB(post_date,function(cached){
 
         for(var i=0;i<cached.length;i++){
-          var rows = [];
           var entry = cached[i];
           Ti.API.info('読み込まれたエントリタイトル：'+cached[i].title);
           var row = myApps.ui.util.createEntryRow(entry);
           tableView.appendRow(row,{
-            animationStyle:Titanium.UI.iPhone.RowAnimationStyle.DOWN
+            animated:false
           });
         }
       });
