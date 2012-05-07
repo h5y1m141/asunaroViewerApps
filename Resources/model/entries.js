@@ -1,21 +1,3 @@
-function initJSONDB(){
-  Ti.API.info(Titanium.Utils.sha1("obj"));
-  Ti.API.info(Ti.Filesystem.applicationDataDirectory);
-
-};
-function isConnected(){
-  if(Titanium.Network.online===true){
-    return true;
-  }
-};
-function sorted(entries){
-  var _ = require('lib/underscore')._;
-  var value = _.chain(entries)
-      .sortBy(function(item) {return item.post_date; })
-      .reverse()
-      .value();
-  return value;
-}
 var jsondb = require('com.irlgaming.jsondb');
 jsondb.debug(true);
 var apiKey = '4f2ce007e4b024f14205b62e';
@@ -36,7 +18,33 @@ var exports = {
       });
       callback(entries);
     }else{
-      self.loadFromMongoLab(blogger,callback);
+      //self.loadFromMongoLab(blogger,callback);
+      self.loadFromSakura(blogger,callback);
+    }
+  },
+  loadFromSakura:function(/* string */ blogger, /* function */callback){
+    if(isConnected){
+      var xhr = Ti.Network.createHTTPClient();
+      var url = "http://h5y1m141.info/entry/" + blogger + "/page/0";
+      xhr.open('GET',url);
+      xhr.onload = function(){
+        var result = JSON.parse(this.responseText);
+
+        callback(result);
+      };
+      xhr.error = function(){
+        var dialog = Ti.UI.createAlertDialog({
+          title: "ネットワーク接続エラー",
+          message: "ネットワーク接続が確立されていません。再度お試しください"
+        });
+        dialog.show();
+      };
+      xhr.send();
+    }else{
+      var dialog = Ti.UI.createAlertDialog({
+        title: "ネットワーク接続できていません"
+      });
+      dialog.show();
     }
 
   },
@@ -86,13 +94,12 @@ var exports = {
     localCollection.ensureIndex({'post_date':1});
     localCollection.commit();
   },
-  findLocalJSONDB:function(post_date,callback){
+  findLocalJSONDB:function(blogger,callback){
     var localCollection = jsondb.factory('localJSONDB', 'asunaroblog');
     var entries = localCollection.find({
-      blogger:{$eq:'oyamada'},
-      post_date:{$lt:post_date}
+      blogger:{$eq:blogger}
     },{
-      $limit:5,
+      // $limit:5,
       $sort:{
         post_date:1
       }
@@ -104,4 +111,23 @@ var exports = {
 
   }
 };
+// private method
 
+function initJSONDB(){
+  Ti.API.info(Titanium.Utils.sha1("obj"));
+  Ti.API.info(Ti.Filesystem.applicationDataDirectory);
+
+};
+function isConnected(){
+  if(Titanium.Network.online===true){
+    return true;
+  }
+};
+function sorted(entries){
+  var _ = require('lib/underscore')._;
+  var value = _.chain(entries)
+      .sortBy(function(item) {return item.post_date; })
+      .reverse()
+      .value();
+  return value;
+}

@@ -19,9 +19,9 @@ var exports = {
     });
     tableView.addEventListener('scrollEnd',function(e){
       var last_index = tableView.data[0].rows.length - 1;
-      var post_date = tableView.data[0].rows[last_index].data.post_date;
+      var blogger = tableView.data[0].rows[last_index].data.blogger;
 
-      myApps.entries.findLocalJSONDB(post_date,function(cached){
+      myApps.entries.findLocalJSONDB(blogger,function(cached){
 
         for(var i=0;i<cached.length;i++){
           var entry = cached[i];
