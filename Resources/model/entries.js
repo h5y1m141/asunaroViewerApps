@@ -18,7 +18,6 @@ var exports = {
       });
       callback(entries);
     }else{
-      //self.loadFromMongoLab(blogger,callback);
       self.loadFromSakura(blogger,callback);
     }
   },
@@ -28,8 +27,20 @@ var exports = {
       var url = "http://h5y1m141.info/entry/" + blogger + "/page/0";
       xhr.open('GET',url);
       xhr.onload = function(){
-        var result = JSON.parse(this.responseText);
-
+        var res = JSON.parse(this.responseText);
+        var result = sorted(res);
+        var localCollection = jsondb.factory('localJSONDB', 'asunaroblog');
+        for(var i=0;i<result.length;i++){
+          localCollection.save({
+            permalink:result[i].permalink,
+            html_body:result[i].html_body,
+            blogger:result[i].blogger,
+            post_date:result[i].post_date,
+            title:result[i].title
+          });
+          localCollection.ensureIndex({'post_date':1});
+          localCollection.commit();
+        }
         callback(result);
       };
       xhr.error = function(){
@@ -47,52 +58,6 @@ var exports = {
       dialog.show();
     }
 
-  },
-  loadFromMongoLab:function(/* string */ blogger, /* function */callback){
-    if(isConnected){
-      var collection = jsondb.factory('asunaroblog:entries','orih6254');
-      var self = this;
-      collection.initializeAPI(hostname,apiKey);
-      collection.API.load();
-      Ti.App.addEventListener("JSONDBDownloadSuccess", function(event) {
-        var entries = collection.find({
-          blogger:{$eq:blogger}
-        },{
-          $limit:10
-        });
-        var result = sorted(entries);
-        for(var i=0;i<result.length;i++){
-          self.save2LocalJSONDB(result[i]);
-        }
-        callback(result);
-      });
-
-      Ti.App.addEventListener("JSONDBDownloadError", function(error) {
-        Ti.API.info(error);
-        var dialog = Ti.UI.createAlertDialog({
-          title: "サーバからエントリをダウンロード出来ませんでした。しばらくしてから再度ダウンロードしてみてください"
-        });
-        dialog.show();
-      });
-    }else{
-      var dialog = Ti.UI.createAlertDialog({
-        title: "ネットワーク接続できていません"
-      });
-      dialog.show();
-    }
-  },
-  save2LocalJSONDB:function(/*json */ entry){
-
-    var localCollection = jsondb.factory('localJSONDB', 'asunaroblog');
-    localCollection.save({
-      permalink:entry.permalink,
-      html_body:entry.html_body,
-      blogger:entry.blogger,
-      post_date:entry.post_date,
-      title:entry.title
-    });
-    localCollection.ensureIndex({'post_date':1});
-    localCollection.commit();
   },
   findLocalJSONDB:function(blogger,callback){
     var localCollection = jsondb.factory('localJSONDB', 'asunaroblog');
