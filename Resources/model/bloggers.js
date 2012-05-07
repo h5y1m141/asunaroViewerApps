@@ -96,8 +96,8 @@ var bloggers = [
     description:'あなたのキャリア形成のライフプランナーとなるべく日々気づいたことをお届けします。'
   }
 ];
-
-var value = myApps._.chain(bloggers)
+var _ = require('lib/underscore')._;
+var value = _.chain(bloggers)
     .sortBy(function(item) {return item.frequency; })
     .value();
 
