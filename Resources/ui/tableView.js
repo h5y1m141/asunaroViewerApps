@@ -29,5 +29,36 @@ var exports = {
       });
     }
     return tableView;
+  },
+  createBloggerRow:function(/* json */ blogger){
+
+    var bloggerRow = Ti.UI.createTableViewRow($$.bloggerRow);
+
+    var bloggerIcon = Ti.UI.createImageView($$.bloggerIcon);
+    bloggerIcon.image = '/ui/images/' + blogger.userid + '.gif';
+    bloggerRow.add(bloggerIcon);
+
+    var blogTitle = Ti.UI.createLabel($$.blogTitle);
+    blogTitle.text = blogger.blogTitle;
+    bloggerRow.add(blogTitle);
+
+    bloggerRow.text = blogger.name;
+    bloggerRow.addEventListener('click',function(e){
+      var row = Ti.UI.createTableViewRow();
+      var data = [];
+      data.push(row);
+      myApps.ui.mainTable.setData(data,{
+        animated:false
+      });
+      myApps.contoller.selectBlogger(blogger.userid);
+
+      myApps.ui.mainTable.animate({
+        duration:180,
+        left:5
+      });
+      myApps.ui.mainTable.moved = false;
+      myApps.ui.webView.hide();
+    });
+    return bloggerRow;
   }
 };

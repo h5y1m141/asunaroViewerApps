@@ -22,7 +22,7 @@ myApps.contoller = require('controller/main');
   myApps.bloggers = require('model/bloggers').data;
   myApps.ui.bloggerTable = myApps.tableView.init('bloggerTable');
   for(var i=0;i<myApps.bloggers.length;i++){
-    var row = myApps.ui.util.createBloggerRow(myApps.bloggers[i]);
+    var row = myApps.tableView.createBloggerRow(myApps.bloggers[i]);
     myApps.ui.bloggerTable.appendRow(row,{
         animated:false
     });
