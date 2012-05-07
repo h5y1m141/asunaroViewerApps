@@ -1,5 +1,5 @@
 var myApps = {};
-myApps._ = require('lib/underscore')._;
+
 myApps.ui = {};
 myApps.ui.util = require('ui/ui');
 myApps.ui.util.tableView = require('ui/tableView');
