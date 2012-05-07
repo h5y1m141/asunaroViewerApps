@@ -1,7 +1,5 @@
 var jsondb = require('com.irlgaming.jsondb');
 jsondb.debug(true);
-var apiKey = '4f2ce007e4b024f14205b62e';
-var hostname = 'api.mongolab.com';
 
 var exports = {
   load:function(/* string */ blogger, /* function */callback){
