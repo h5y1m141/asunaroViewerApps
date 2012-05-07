@@ -1,10 +1,8 @@
 var myApps = {};
-
 myApps.ui = {};
 myApps.window = {};
 myApps.tabGroup = Titanium.UI.createTabGroup();
 myApps.window.main = require('ui/window').createMainWindow();
-myApps.ui.util = require('ui/ui');
 myApps.tableView = require('ui/tableView');
 myApps.webView = require('ui/webView');
 myApps.ui.mainTable = myApps.tableView.init('tableView');
