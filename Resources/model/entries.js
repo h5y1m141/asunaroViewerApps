@@ -1,11 +1,11 @@
 var jsondb = require('com.irlgaming.jsondb');
 jsondb.debug(true);
-
+var localCollection = jsondb.factory('localJSONDB', 'asunaroblog');
 var exports = {
   load:function(/* string */ blogger, /* function */callback){
     initJSONDB();
     var self = this;
-    var localCollection = jsondb.factory('localJSONDB', 'asunaroblog');
+
     // alert(localCollection.count({blogger:{$eq:blogger}}));
     var count = localCollection.count({blogger:{$eq:blogger}});
     if(count >= 1){
@@ -27,7 +27,7 @@ var exports = {
       xhr.onload = function(){
         var res = JSON.parse(this.responseText);
         var result = sorted(res);
-        var localCollection = jsondb.factory('localJSONDB', 'asunaroblog');
+
         for(var i=0;i<result.length;i++){
           localCollection.save({
             permalink:result[i].permalink,
