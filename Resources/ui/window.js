@@ -7,6 +7,7 @@ var exports = {
     win.rightNavButton = (function(){
       var button = Titanium.UI.createButton($$.refreshBtn);
       button.addEventListener('click', function() {
+        myApps.contoller.updateEntries();
       });
       return button;
     })();
@@ -33,6 +34,10 @@ var exports = {
       });
       return button;
     })();
+    return win;
+  },
+  createEntryWindow :function(){
+    var win = Titanium.UI.createWindow($$.win);
     return win;
   }
 };

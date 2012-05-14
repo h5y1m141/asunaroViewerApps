@@ -1,4 +1,10 @@
 var exports = {
+  routing:function(){
+    var data = {
+      hasCache:'dd',
+      latest:''
+    };
+  },
   selectBlogger:function(/* string */ blogger){
     myApps.entries.load(blogger,function(entries){
 
@@ -14,5 +20,9 @@ var exports = {
         });
       }
     });
+  },
+  updateEntries:function(){
+    var startpage = myApps.ui.mainTable.data[0].rows[0].data.post_date;
+    alert('start refresh. page is:'+startpage);
   }
 };

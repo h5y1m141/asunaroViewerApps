@@ -95,8 +95,7 @@ var exports = {
       webViewHeaderContainer.add(iconIamge);
       webViewHeaderContainer.add(label);
 
-      var EntryWin = self.showEntryWindow();
-      EntryWin.add(webViewHeaderContainer);
+      myApps.window.entry.add(webViewHeaderContainer);
       // prepare css for iphone
       var file = Titanium.Filesystem.getFile(Titanium.Filesystem.resourcesDirectory, '/ui/html/main.css');
       var css = file.read();
@@ -107,8 +106,8 @@ var exports = {
         + e.row.data.html_body
         + '</body></html>';
       myApps.ui.webView.show();
-      EntryWin.add(myApps.ui.webView);
-      tabGroup.activeTab.open(EntryWin,{animated:true});
+      myApps.window.entry.add(myApps.ui.webView);
+      myApps.tabGroup.activeTab.open(myApps.window.entry,{animated:true});
     });
 
 
