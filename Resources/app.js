@@ -10,6 +10,21 @@ myApps.ui.mainTable = myApps.tableView.init('tableView');
 myApps.entries = require('model/entries');
 myApps.contoller = require('controller/main');
 
+myApps.ui.actInd = Titanium.UI.createActivityIndicator({
+  zIndex:10,
+  top:50,
+  height:55,
+  width:'auto',
+  opacity:0.7,
+  color:'#ffffff',
+  backgroundColor:'#000',
+  borderRadius:5,
+  borderColor:'#000',
+  font:{fontFamily:'Helvetica Neue',fontSize:13},
+  message:'Loading...',
+  style:Titanium.UI.iPhone.ActivityIndicatorStyle.PLAIN
+});
+
 
 (function(){
   var blogger = 'uehara';
@@ -27,9 +42,10 @@ myApps.contoller = require('controller/main');
     });
   }
 
+
   myApps.window.main.add(myApps.ui.bloggerTable);
   myApps.window.main.add(myApps.ui.webView);
-
+  myApps.window.main.add(myApps.ui.actInd);
   var tab1 =Titanium.UI.createTab();
   tab1.window = myApps.window.main;
   myApps.tabGroup.addTab(tab1);

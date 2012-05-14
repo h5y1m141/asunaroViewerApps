@@ -7,6 +7,7 @@ var exports = {
     win.rightNavButton = (function(){
       var button = Titanium.UI.createButton($$.refreshBtn);
       button.addEventListener('click', function() {
+        myApps.ui.actInd.show();
         myApps.contoller.updateEntries();
       });
       return button;
