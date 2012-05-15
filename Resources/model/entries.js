@@ -16,45 +16,17 @@ var exports = {
       });
       callback(entries);
     }else{
-      self.loadFromSakura(blogger,callback);
+      self.loadbyPage(blogger,callback);
     }
   },
-  loadFromSakura:function(/* string */ blogger, /* function */callback){
-    if(isConnected){
-      var xhr = Ti.Network.createHTTPClient();
-      var url = "http://h5y1m141.info/entry/" + blogger + "/page/0";
-      xhr.open('GET',url);
-      xhr.onload = function(){
-        var res = JSON.parse(this.responseText);
-        var result = sorted(res);
+  loadbyPage:function(/* string */ blogger, /* function */callback){
+    var url = "http://h5y1m141.info/entry/" + blogger + "/page/0";
+    httpClient(url,callback);
 
-        for(var i=0;i<result.length;i++){
-          localCollection.save({
-            permalink:result[i].permalink,
-            html_body:result[i].html_body,
-            blogger:result[i].blogger,
-            post_date:result[i].post_date,
-            title:result[i].title
-          });
-          localCollection.ensureIndex({'post_date':1});
-          localCollection.commit();
-        }
-        callback(result);
-      };
-      xhr.error = function(){
-        var dialog = Ti.UI.createAlertDialog({
-          title: "ネットワーク接続エラー",
-          message: "ネットワーク接続が確立されていません。再度お試しください"
-        });
-        dialog.show();
-      };
-      xhr.send();
-    }else{
-      var dialog = Ti.UI.createAlertDialog({
-        title: "ネットワーク接続できていません"
-      });
-      dialog.show();
-    }
+  },
+  loadLastUpdateEntry:function(/* string */ blogger,/* date */ lastupdate, /* function */callback){
+    var url = "http://h5y1m141.info/entry/" + blogger + "/lastupdate/" + lastupdate;
+    httpClient(url,callback);
 
   },
   findLocalJSONDB:function(blogger,callback){
@@ -93,4 +65,42 @@ function sorted(entries){
       .reverse()
       .value();
   return value;
+}
+
+function httpClient(url,callback){
+  if(Titanium.Network.online===true){
+    var xhr = Ti.Network.createHTTPClient();
+    xhr.open('GET',url);
+    xhr.onload = function(){
+      var res = JSON.parse(this.responseText);
+      var result = sorted(res);
+
+      for(var i=0;i<result.length;i++){
+        localCollection.save({
+          permalink:result[i].permalink,
+          html_body:result[i].html_body,
+          blogger:result[i].blogger,
+          post_date:result[i].post_date,
+          title:result[i].title
+        });
+        localCollection.ensureIndex({'post_date':1});
+        localCollection.commit();
+        Ti.API.info('stored cache!! entry title is:'+result[i].title);
+      }
+      callback(result);
+    };
+    xhr.error = function(){
+      var dialog = Ti.UI.createAlertDialog({
+        title: "ネットワーク接続エラー",
+        message: "ネットワーク接続が確立されていません。再度お試しください"
+      });
+      dialog.show();
+    };
+    xhr.send();
+  }else{
+    var dialog = Ti.UI.createAlertDialog({
+      title: "ネットワーク接続できていません"
+    });
+    dialog.show();
+  }
 }
