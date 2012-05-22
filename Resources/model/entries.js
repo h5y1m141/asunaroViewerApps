@@ -19,7 +19,7 @@ var exports = {
     }
   },
   loadLatest:function(/* string */ blogger, /* function */callback){
-    alert('start'+ blogger + 'さんのエントリ読み込み開始');
+
     // 2033-05-18 12:33:20 +0900(unixitmeだと2000000000 ) よりも最新エントリは存在しないので
     // 決め打ち
     var url = "http://h5y1m141.info/entry/" + blogger + "/date/older/2000000000";
