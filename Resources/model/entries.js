@@ -32,7 +32,7 @@ var exports = {
 
   },
   loadOldEntry:function(/* string */ blogger,/* date */ baseDate, /* function */callback){
-    var url = "http://h5y1m141.info/entry/" + blogger + "/date/older/" + basedate;
+    var url = "http://h5y1m141.info/entry/" + blogger + "/date/older/" + baseDate;
     httpClient(url,callback);
 
   },
