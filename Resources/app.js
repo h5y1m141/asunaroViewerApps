@@ -15,11 +15,8 @@ myApps.ui.actInd = Titanium.UI.createActivityIndicator({
   top:50,
   height:55,
   width:'auto',
-  opacity:0.7,
-  color:'#ffffff',
   backgroundColor:'#000',
-  borderRadius:5,
-  borderColor:'#000',
+  color:'#fff',
   font:{fontFamily:'Helvetica Neue',fontSize:13},
   message:'Loading...',
   style:Titanium.UI.iPhone.ActivityIndicatorStyle.PLAIN

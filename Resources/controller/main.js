@@ -8,11 +8,13 @@ var exports = {
         rows.push(row);
 
       }
+      myApps.ui.actInd.hide();
       var loadOlderEntryRow = myApps.tableView.createLoadOlderEntryRow();
       rows.push(loadOlderEntryRow);
       myApps.ui.mainTable.setData(rows,{
           animated:false
-        });
+      });
+
     });
   },
   latestEntries:function(){

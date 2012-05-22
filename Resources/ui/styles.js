@@ -151,6 +151,22 @@ var prop = {
     left:5,
     top:5
   },
+  loadOlderEntryRow:{
+    borderWidth:1,
+    backgroundColor:'#222',
+    height:40,
+    width:'auto'
+  },
+  reloadLabel:{
+    width:200,
+    height:30,
+    top:0,
+    left:80,
+    color:"#898989",
+    font:{
+      fontSize:12
+    }
+  },
   bloggerRow:{
     width:200,
     borderWidth:2,
