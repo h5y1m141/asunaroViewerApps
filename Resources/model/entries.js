@@ -1,6 +1,6 @@
 var jsondb = require('com.irlgaming.jsondb');
 jsondb.debug(true);
-var localCollection = jsondb.factory('localJSONDB', 'asunaroblog');
+var localCollection = jsondb.factory('localJSONDB', 'blogDB');
 var exports = {
   load:function(/* string */ blogger, /* function */callback){
     initJSONDB();
