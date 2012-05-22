@@ -5,31 +5,40 @@ var exports = {
   load:function(/* string */ blogger, /* function */callback){
     initJSONDB();
     var self = this;
-
-    // alert(localCollection.count({blogger:{$eq:blogger}}));
     var count = localCollection.count({blogger:{$eq:blogger}});
     if(count >= 1){
       var entries = localCollection.find({
         blogger:{$eq:blogger}
       },{
-        $limit:5
+        $limit:5,
+        $sort:{post_date:-1}
       });
       callback(entries);
     }else{
-      self.loadbyPage(blogger,callback);
+      self.loadLatest(blogger,callback);
     }
   },
-  loadbyPage:function(/* string */ blogger, /* function */callback){
-    var url = "http://h5y1m141.info/entry/" + blogger + "/page/0";
+  loadLatest:function(/* string */ blogger, /* function */callback){
+    alert('start'+ blogger + 'さんのエントリ読み込み開始');
+    // 2033-05-18 12:33:20 +0900(unixitmeだと2000000000 ) よりも最新エントリは存在しないので
+    // 決め打ち
+    var url = "http://h5y1m141.info/entry/" + blogger + "/date/older/2000000000";
     httpClient(url,callback);
 
   },
   loadLastUpdateEntry:function(/* string */ blogger,/* date */ lastupdate, /* function */callback){
-    var url = "http://h5y1m141.info/entry/" + blogger + "/lastupdate/" + lastupdate;
+    var url = "http://h5y1m141.info/entry/" + blogger + "/date/newer/" + lastupdate;
+    httpClient(url,callback);
+
+  },
+  loadOldEntry:function(/* string */ blogger,/* date */ baseDate, /* function */callback){
+    var url = "http://h5y1m141.info/entry/" + blogger + "/date/older/" + basedate;
     httpClient(url,callback);
 
   },
   findLocalJSONDB:function(blogger,callback){
+    myApps.ui.actInd.setMessage('Load data from local....');
+    myApps.ui.actInd.show();
     var localCollection = jsondb.factory('localJSONDB', 'asunaroblog');
     var entries = localCollection.find({
       blogger:{$eq:blogger}
@@ -95,6 +104,7 @@ function httpClient(url,callback){
         message: "ネットワーク接続が確立されていません。再度お試しください"
       });
       dialog.show();
+      myApps.ui.actInd.hide();
     };
     xhr.send();
   }else{
@@ -102,5 +112,6 @@ function httpClient(url,callback){
       title: "ネットワーク接続できていません"
     });
     dialog.show();
+    myApps.ui.actInd.hide();
   }
 }
