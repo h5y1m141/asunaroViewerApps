@@ -4,13 +4,13 @@ var localCollection = jsondb.factory('localJSONDB', 'blogDB');
 var exports = {
   load:function(/* string */ blogger, /* function */callback){
     initJSONDB();
+    myApps.ui.actInd.show();
     var self = this;
     var count = localCollection.count({blogger:{$eq:blogger}});
     if(count >= 1){
       var entries = localCollection.find({
         blogger:{$eq:blogger}
       },{
-        $limit:5,
         $sort:{post_date:-1}
       });
       callback(entries);
