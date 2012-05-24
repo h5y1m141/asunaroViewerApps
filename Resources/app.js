@@ -1,13 +1,13 @@
 var myApps = {};
 myApps.ui = {};
 myApps.window = {};
-myApps.tabGroup = Titanium.UI.createTabGroup();
+// myApps.tabGroup = Titanium.UI.createTabGroup();
 myApps.window.main = require('ui/window').createMainWindow();
 myApps.window.entry = require('ui/window').createEntryWindow();
 myApps.tableView = require('ui/tableView');
 myApps.webView = require('ui/webView');
 myApps.ui.mainTable = myApps.tableView.init('tableView');
-myApps.entries = require('model/entries');
+
 myApps.contoller = require('controller/main');
 
 myApps.ui.actInd = Titanium.UI.createActivityIndicator({
@@ -24,16 +24,27 @@ myApps.ui.actInd = Titanium.UI.createActivityIndicator({
 
 
 (function(){
-  var blogger = 'uehara';
-  myApps.contoller.selectBlogger(blogger);
-  myApps.ui.webView = myApps.webView.init();
-  myApps.window.main.add(myApps.ui.mainTable);
+  // var blogger = 'uehara';
+  // myApps.contoller.selectBlogger(blogger);
+  // myApps.ui.webView = myApps.webView.init();
+  // myApps.window.main.add(myApps.ui.mainTable);
 
   // TableView for blogger info
   myApps.bloggers = require('model/bloggers').data;
+
   myApps.ui.bloggerTable = myApps.tableView.init('bloggerTable');
   for(var i=0;i<myApps.bloggers.length;i++){
     var row = myApps.tableView.createBloggerRow(myApps.bloggers[i]);
+    row.userid = myApps.bloggers[i].userid;
+    row.addEventListener('click',function(e){
+      var blogger = e.row.userid;
+      myApps.contoller.selectBlogger(blogger);
+      myApps.window.entry.add(myApps.ui.mainTable);
+
+      myApps.window.entry.open({
+        transition:Titanium.UI.iPhone.AnimationStyle.FLIP_FROM_LEFT
+      });
+    });
     myApps.ui.bloggerTable.appendRow(row,{
         animated:false
     });
@@ -41,12 +52,13 @@ myApps.ui.actInd = Titanium.UI.createActivityIndicator({
 
 
   myApps.window.main.add(myApps.ui.bloggerTable);
-  myApps.window.main.add(myApps.ui.webView);
+  // myApps.window.main.add(myApps.ui.webView);
   myApps.window.main.add(myApps.ui.actInd);
-  var tab1 =Titanium.UI.createTab();
-  tab1.window = myApps.window.main;
-  myApps.tabGroup.addTab(tab1);
-  myApps.tabGroup.open();
+  // var tab1 =Titanium.UI.createTab();
+  // tab1.window = myApps.window.main;
+  // myApps.tabGroup.addTab(tab1);
+  // myApps.tabGroup.open();
+  myApps.window.main.open();
 
 
 }).call(this);
