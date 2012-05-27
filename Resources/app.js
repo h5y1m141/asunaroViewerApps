@@ -1,7 +1,6 @@
 var myApps = {};
 myApps.ui = {};
 myApps.window = {};
-// myApps.tabGroup = Titanium.UI.createTabGroup();
 myApps.window.main = require('ui/window').createMainWindow();
 myApps.window.entry = require('ui/window').createEntryWindow();
 myApps.tableView = require('ui/tableView');
@@ -24,12 +23,7 @@ myApps.ui.actInd = Titanium.UI.createActivityIndicator({
 
 
 (function(){
-  // var blogger = 'uehara';
-  // myApps.contoller.selectBlogger(blogger);
-  // myApps.ui.webView = myApps.webView.init();
-  // myApps.window.main.add(myApps.ui.mainTable);
 
-  // TableView for blogger info
   myApps.bloggers = require('model/bloggers').data;
 
   myApps.ui.bloggerTable = myApps.tableView.init('bloggerTable');
@@ -40,24 +34,26 @@ myApps.ui.actInd = Titanium.UI.createActivityIndicator({
       var blogger = e.row.userid;
       myApps.contoller.selectBlogger(blogger);
       myApps.window.entry.add(myApps.ui.mainTable);
-
+      var toolBar = Titanium.UI.iOS.createToolbar({
+        top:0,
+        left:0,
+        barColor:'#7a7a7a',
+        height:40,
+        zIndex:10
+      });
+      myApps.window.entry.add(toolBar);
       myApps.window.entry.open({
         transition:Titanium.UI.iPhone.AnimationStyle.FLIP_FROM_LEFT
       });
     });
+
     myApps.ui.bloggerTable.appendRow(row,{
         animated:false
     });
   }
 
-
   myApps.window.main.add(myApps.ui.bloggerTable);
-  // myApps.window.main.add(myApps.ui.webView);
   myApps.window.main.add(myApps.ui.actInd);
-  // var tab1 =Titanium.UI.createTab();
-  // tab1.window = myApps.window.main;
-  // myApps.tabGroup.addTab(tab1);
-  // myApps.tabGroup.open();
   myApps.window.main.open();
 
 
