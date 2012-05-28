@@ -4,7 +4,7 @@ myApps.window = {};
 myApps.window.main = require('ui/window').createMainWindow();
 myApps.window.entry = require('ui/window').createEntryWindow();
 myApps.tableView = require('ui/tableView');
-myApps.webView = require('ui/webView');
+
 myApps.ui.mainTable = myApps.tableView.init('tableView');
 myApps.contoller = require('controller/main');
 
