@@ -48,7 +48,7 @@ var exports = {
         left:5
       });
       myApps.ui.mainTable.moved = false;
-      myApps.ui.webView.hide();
+
     });
     return bloggerRow;
   },
@@ -97,7 +97,7 @@ var exports = {
         + '</body></html>';
       myApps.ui.webView.show();
       myApps.window.entry.add(myApps.ui.webView);
-      myApps.tabGroup.activeTab.open(myApps.window.entry,{animated:true});
+      //myApps.tabGroup.activeTab.open(myApps.window.entry,{animated:true});
     });
 
 
@@ -114,10 +114,6 @@ var exports = {
     entrySummary.text = entry.html_body.replace(/<\/?[^>]+>/gi, "");
     row.add(entrySummary);
 
-    // var bloggerName = Ti.UI.createLabel($$.bloggerName);
-    // bloggerName.text = entry.blogger;
-    // row.add(bloggerName);
-
     var icon_iamge = Ti.UI.createImageView($$.iconImage);
     icon_iamge.image = '/ui/images/' + entry.blogger + '.gif';
     row.add(icon_iamge);
@@ -125,21 +121,21 @@ var exports = {
     var iconOverrap = Ti.UI.createView($$.iconOverrap);
     row.add(iconOverrap);
 
-    var underView = Ti.UI.createView($$.underView);
-    var twitterBtn = Ti.UI.createImageView($$.twitterBtn);
-    var tweetRTCount = Ti.UI.createLabel($$.tweetRTCount);
+    // var underView = Ti.UI.createView($$.underView);
+    // var twitterBtn = Ti.UI.createImageView($$.twitterBtn);
+    // var tweetRTCount = Ti.UI.createLabel($$.tweetRTCount);
 
-    var hatebuBtn = Ti.UI.createImageView($$.hatebuBtn);
-    var hatebuCount = Ti.UI.createLabel($$.hatebuCount);
-    var facebookBtn = Ti.UI.createImageView($$.facebookBtn);
-    var facebookLikeCount = Ti.UI.createLabel($$.facebookLikeCount);
-    underView.add(twitterBtn);
-    underView.add(tweetRTCount);
-    underView.add(hatebuBtn);
-    underView.add(hatebuCount);
-    underView.add(facebookBtn);
-    underView.add(facebookLikeCount);
-    row.add(underView);
+    // var hatebuBtn = Ti.UI.createImageView($$.hatebuBtn);
+    // var hatebuCount = Ti.UI.createLabel($$.hatebuCount);
+    // var facebookBtn = Ti.UI.createImageView($$.facebookBtn);
+    // var facebookLikeCount = Ti.UI.createLabel($$.facebookLikeCount);
+    // underView.add(twitterBtn);
+    // underView.add(tweetRTCount);
+    // underView.add(hatebuBtn);
+    // underView.add(hatebuCount);
+    // underView.add(facebookBtn);
+    // underView.add(facebookLikeCount);
+    // row.add(underView);
 
     row.className = entry.blogger;
     return row;
