@@ -75,28 +75,14 @@ var exports = {
     var row = Ti.UI.createTableViewRow($$.viewRow);
     row.data = entry;
     row.addEventListener('click', function(e){
-      var webViewHeaderContainer = Ti.UI.createLabel($$.webViewHeaderContainer);
-      var label = Ti.UI.createLabel($$.webViewLabel);
-      label.text = e.row.data.title;
+      var webViewElements = require('ui/webView').init(e.row.data.title,e.row.data.blogger,e.row.data.html_body);
 
-      var iconIamge = Ti.UI.createImageView($$.iconImage);
-      iconIamge.image = '/ui/images/' + e.row.data.blogger + '.gif';
-      iconIamge.backgroundColor = '#cbcbcb';
-      webViewHeaderContainer.add(iconIamge);
-      webViewHeaderContainer.add(label);
+      myApps.window.webView = require('ui/window').createEntryDetailWindow();
+      for(var i=0;i<webViewElements.length;i++){
+        myApps.window.webView.add(webViewElements[i]);
+      }
+      myApps.window.webView.open();
 
-      myApps.window.entry.add(webViewHeaderContainer);
-      // prepare css for iphone
-      var file = Titanium.Filesystem.getFile(Titanium.Filesystem.resourcesDirectory, '/ui/html/main.css');
-      var css = file.read();
-      var htmlHeaderElement = '<html><head><meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1"><style type="text/css">'+ css + '</style></head>';
-
-      myApps.ui.webView.html = htmlHeaderElement
-        +'<body>'
-        + e.row.data.html_body
-        + '</body></html>';
-      myApps.ui.webView.show();
-      myApps.window.entry.add(myApps.ui.webView);
       //myApps.tabGroup.activeTab.open(myApps.window.entry,{animated:true});
     });
 
