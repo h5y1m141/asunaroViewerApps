@@ -1,9 +1,7 @@
 var $$ = require('ui/styles').prop;
 
-
 var exports = {
   init:function(option){
-    var self = this;
     var tableViewStyle = option||'tableView';
     Ti.API.info(tableViewStyle);
     var tableView = Ti.UI.createTableView($$[tableViewStyle]);
@@ -71,7 +69,7 @@ var exports = {
 
   },
   createEntryRow :function(/* JSON */ entry){
-    var self = this;
+
     var row = Ti.UI.createTableViewRow($$.viewRow);
     row.data = entry;
     row.addEventListener('click', function(e){
