@@ -1,3 +1,4 @@
+myApps.entries = require('model/entries');
 var exports = {
   selectBlogger:function(/* string */ blogger){
     myApps.entries.load(blogger,function(entries){
@@ -9,8 +10,13 @@ var exports = {
 
       }
       myApps.ui.actInd.hide();
-      var loadOlderEntryRow = myApps.tableView.createLoadOlderEntryRow();
-      rows.push(loadOlderEntryRow);
+      // エントリが1件以上読みこまれていたらローカルのキャッシュから
+      // 読み込めるようにボタンを配置する
+      if(entries.length>=1){
+        var loadOlderEntryRow = myApps.tableView.createLoadOlderEntryRow();
+        rows.push(loadOlderEntryRow);
+      }
+
       myApps.ui.mainTable.setData(rows,{
           animated:false
       });
