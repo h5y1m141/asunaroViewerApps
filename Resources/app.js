@@ -6,42 +6,21 @@ myApps.window.entry = require('ui/window').createEntryWindow();
 myApps.tableView = require('ui/tableView');
 myApps.webView = require('ui/webView');
 myApps.ui.mainTable = myApps.tableView.init('tableView');
-
 myApps.contoller = require('controller/main');
 
-myApps.ui.actInd = Titanium.UI.createActivityIndicator({
-  zIndex:10,
-  top:50,
-  height:55,
-  width:'auto',
-  backgroundColor:'#000',
-  color:'#fff',
-  font:{fontFamily:'Helvetica Neue',fontSize:13},
-  message:'Loading...',
-  style:Titanium.UI.iPhone.ActivityIndicatorStyle.PLAIN
-});
-
-
 (function(){
-
   myApps.bloggers = require('model/bloggers').data;
-
   myApps.ui.bloggerTable = myApps.tableView.init('bloggerTable');
   for(var i=0;i<myApps.bloggers.length;i++){
     var row = myApps.tableView.createBloggerRow(myApps.bloggers[i]);
     row.userid = myApps.bloggers[i].userid;
+    row.bloggerName = myApps.bloggers[i].name;
+    row.blogTitle = myApps.bloggers[i].blogTitle;
     row.addEventListener('click',function(e){
-      var blogger = e.row.userid;
-      myApps.contoller.selectBlogger(blogger);
-      myApps.window.entry.add(myApps.ui.mainTable);
-      var toolBar = Titanium.UI.iOS.createToolbar({
-        top:0,
-        left:0,
-        barColor:'#7a7a7a',
-        height:40,
-        zIndex:10
-      });
-      myApps.window.entry.add(toolBar);
+      myApps.contoller.selectBlogger(e.row.userid);
+
+      myApps.window.entry.toolBar = require('ui/toolBar').init(e.row.blogTitle);
+      myApps.window.entry.add(myApps.window.entry.toolBar);
       myApps.window.entry.open({
         transition:Titanium.UI.iPhone.AnimationStyle.FLIP_FROM_LEFT
       });
@@ -51,8 +30,9 @@ myApps.ui.actInd = Titanium.UI.createActivityIndicator({
         animated:false
     });
   }
-
+  myApps.window.entry.add(myApps.ui.mainTable);
   myApps.window.main.add(myApps.ui.bloggerTable);
+  myApps.ui.actInd = require('ui/actInd').init();
   myApps.window.main.add(myApps.ui.actInd);
   myApps.window.main.open();
 
