@@ -45,7 +45,6 @@ var exports = {
         duration:180,
         left:5
       });
-      myApps.ui.mainTable.moved = false;
 
     });
     return bloggerRow;
@@ -76,10 +75,13 @@ var exports = {
       var webViewElements = require('ui/webView').init(e.row.data.title,e.row.data.blogger,e.row.data.html_body);
 
       myApps.window.webView = require('ui/window').createEntryDetailWindow();
+
       for(var i=0;i<webViewElements.length;i++){
         myApps.window.webView.add(webViewElements[i]);
       }
-      myApps.window.webView.open();
+      myApps.window.webView.open({
+        transition:Titanium.UI.iPhone.AnimationStyle.CURL_UP
+      });
 
       //myApps.tabGroup.activeTab.open(myApps.window.entry,{animated:true});
     });
