@@ -21,6 +21,7 @@ myApps.controller = require('controller/main');
 
       myApps.window.entry.toolBar = require('ui/toolBar').init(e.row.blogTitle);
       myApps.window.entry.add(myApps.window.entry.toolBar);
+      myApps.window.entry.add(myApps.ui.actInd);
       myApps.window.entry.open({
         transition:Titanium.UI.iPhone.AnimationStyle.FLIP_FROM_LEFT
       });
