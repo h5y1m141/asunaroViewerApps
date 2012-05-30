@@ -6,7 +6,7 @@ myApps.window.entry = require('ui/window').createEntryWindow();
 myApps.tableView = require('ui/tableView');
 
 myApps.ui.mainTable = myApps.tableView.init('tableView');
-myApps.contoller = require('controller/main');
+myApps.controller = require('controller/main');
 
 (function(){
   myApps.bloggers = require('model/bloggers').data;
@@ -17,7 +17,7 @@ myApps.contoller = require('controller/main');
     row.bloggerName = myApps.bloggers[i].name;
     row.blogTitle = myApps.bloggers[i].blogTitle;
     row.addEventListener('click',function(e){
-      myApps.contoller.selectBlogger(e.row.userid);
+      myApps.controller.selectBlogger(e.row.userid);
 
       myApps.window.entry.toolBar = require('ui/toolBar').init(e.row.blogTitle);
       myApps.window.entry.add(myApps.window.entry.toolBar);
