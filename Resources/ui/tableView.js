@@ -14,8 +14,7 @@ var exports = {
     label.text= '過去のエントリを読み込む';
     row.add(label);
     row.addEventListener('click',function(e){
-      myApps.ui.actInd.show();
-      myApps.contoller.oldEntries();
+      myApps.controller.oldEntries();
     });
     return row;
   },
@@ -39,13 +38,7 @@ var exports = {
       myApps.ui.mainTable.setData(data,{
         animated:false
       });
-      myApps.contoller.selectBlogger(blogger.userid);
-
-      myApps.ui.mainTable.animate({
-        duration:180,
-        left:5
-      });
-
+      myApps.controller.selectBlogger(blogger.userid);
     });
     return bloggerRow;
   },
@@ -75,10 +68,41 @@ var exports = {
       var webViewElements = require('ui/webView').init(e.row.data.title,e.row.data.blogger,e.row.data.html_body);
 
       myApps.window.webView = require('ui/window').createEntryDetailWindow();
-
+      myApps.window.webView.showNavBar();
       for(var i=0;i<webViewElements.length;i++){
         myApps.window.webView.add(webViewElements[i]);
       }
+
+      var label = Ti.UI.createLabel({
+        font:{
+          fontSize:14
+        },
+        color:'#fff',
+        width:60,
+        height:30,
+        textAlign:1,
+        backgroundColor:'#222',
+        borderWidth:1,
+        borderRadius:5,
+        text:'Back'
+
+      });
+
+      label.addEventListener('click',function(e){
+        myApps.window.webView.close({
+          transition:Titanium.UI.iPhone.AnimationStyle.CURL_DOWN
+        });
+      });
+
+      var toolBar = Ti.UI.iOS.createToolbar({
+        items:[label],
+        top:0,
+        left:0,
+        barColor:'#222',
+        height:40,
+        zIndex:10
+      });
+      myApps.window.webView.add(toolBar);
       myApps.window.webView.open({
         transition:Titanium.UI.iPhone.AnimationStyle.CURL_UP
       });
