@@ -31,15 +31,7 @@ var exports = {
     bloggerRow.add(blogTitle);
 
     bloggerRow.text = blogger.name;
-    bloggerRow.addEventListener('click',function(e){
-      var row = Ti.UI.createTableViewRow();
-      var data = [];
-      data.push(row);
-      myApps.ui.mainTable.setData(data,{
-        animated:false
-      });
-      myApps.controller.selectBlogger(blogger.userid);
-    });
+
     return bloggerRow;
   },
   createComposeRow :function(){
