@@ -17,6 +17,7 @@ tmp
 /Resources/android/images/**/**/*
 /build/iphone/build/build.log
 /Resources/.DS_Store
+/Resources/ui/.DS_Store
 /.DS_Store
 /Resources/vendor/*
 /Resources/vendor/**/*
