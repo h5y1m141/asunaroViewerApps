@@ -1,13 +1,15 @@
 var jsondb = require('com.irlgaming.jsondb');
 jsondb.debug(true);
-var localCollection = jsondb.factory('localJSONDB', 'blogDB');
+
 var exports = {
   load:function(/* string */ blogger, /* function */callback){
+    var self = this;
     initJSONDB();
     myApps.ui.actInd.show();
-    var self = this;
-    var count = localCollection.count({blogger:{$eq:blogger}});
-    if(count >= 1){
+    var localCollection = jsondb.factory('localJSONDB', 'blogDB');
+    var cached = localCollection.find({blogger:{$eq:blogger}});
+    Ti.API.info('number of entry is:'+ cached.length);
+    if(cached.length >= 1){
       var entries = localCollection.find({
         blogger:{$eq:blogger}
       },{
@@ -34,25 +36,6 @@ var exports = {
   loadOldEntry:function(/* string */ blogger,/* date */ baseDate, /* function */callback){
     var url = "http://h5y1m141.info/entry/" + blogger + "/date/older/" + baseDate;
     httpClient(url,callback);
-
-  },
-  findLocalJSONDB:function(blogger,callback){
-    myApps.ui.actInd.setMessage('Load data from local....');
-    myApps.ui.actInd.show();
-    var localCollection = jsondb.factory('localJSONDB', 'asunaroblog');
-    var entries = localCollection.find({
-      blogger:{$eq:blogger}
-    },{
-      // $limit:5,
-      $sort:{
-        post_date:1
-      }
-    });
-    for(var i=0;i<entries.length;i++){
-      Ti.API.info(entries[i].title);
-    }
-    callback(sorted(entries));
-
   }
 };
 // private method
@@ -83,18 +66,30 @@ function httpClient(url,callback){
     xhr.onload = function(){
       var res = JSON.parse(this.responseText);
       var result = sorted(res);
-
+      var localCollection = jsondb.factory('localJSONDB', 'blogDB');
       for(var i=0;i<result.length;i++){
-        localCollection.save({
-          permalink:result[i].permalink,
-          html_body:result[i].html_body,
-          blogger:result[i].blogger,
-          post_date:result[i].post_date,
-          title:result[i].title
+
+        var localCache = localCollection.find({
+          permalink:{$eq:result[i].permalink}
         });
-        localCollection.ensureIndex({'post_date':1});
-        localCollection.commit();
-        Ti.API.info('stored cache!! entry title is:'+result[i].title);
+
+        if(localCache.length >=1){
+          Ti.API.info('entry title '+result[i].title+ 'already stored');
+        }else{
+          localCollection.save({
+            permalink:result[i].permalink,
+            html_body:result[i].html_body,
+            blogger:result[i].blogger,
+            post_date:result[i].post_date,
+            title:result[i].title
+          });
+          localCollection.ensureIndex({'post_date':1});
+          localCollection.commit();
+          Ti.API.info('stored cache!! entry title is:'+result[i].title);
+        }
+
+
+
       }
       callback(result);
     };
