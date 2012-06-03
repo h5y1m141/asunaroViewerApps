@@ -54,29 +54,8 @@ var exports = {
         });
       });
 
-      // var label = Ti.UI.createLabel({
-      //   font:{
-      //     fontSize:14
-      //   },
-      //   color:'#fff',
-      //   width:60,
-      //   height:30,
-      //   textAlign:1,
-      //   backgroundColor:'#222',
-      //   borderWidth:1,
-      //   borderRadius:5,
-      //   text:'Back'
-
-      // });
-
-      // label.addEventListener('click',function(e){
-      //   myApps.window.webView.close({
-      //     transition:Titanium.UI.iPhone.AnimationStyle.CURL_DOWN
-      //   });
-      // });
-
       var toolBar = Ti.UI.iOS.createToolbar({
-        // items:[label],
+
         items:[doneBtn],
         top:0,
         left:0,
