@@ -34,24 +34,6 @@ var exports = {
 
     return bloggerRow;
   },
-  createComposeRow :function(){
-    var composeRow = Ti.UI.createTableViewRow($$.composeRow);
-    composeRow.showd = true;
-    var mail = Ti.UI.createImageView($$.lightMailBtn);
-    composeRow.add(mail);
-
-    var readLater = Ti.UI.createImageView($$.lightTextBtn);
-    composeRow.add(readLater);
-
-    var star = Ti.UI.createImageView($$.lightStarBtn);
-    composeRow.add(star);
-
-    var tweet = Ti.UI.createImageView($$.lightCommentBtn);
-    composeRow.add(tweet);
-
-    return composeRow;
-
-  },
   createEntryRow :function(/* JSON */ entry){
 
     var row = Ti.UI.createTableViewRow($$.viewRow);
