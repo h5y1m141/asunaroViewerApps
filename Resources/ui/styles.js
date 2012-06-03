@@ -8,56 +8,13 @@ var theme = {
   textAlign:'center',
   width:'auto',
   viewIcon:'KS_nav_views.png',
-  uiIcon:'KS_nav_ui.png',
-  backgroundGradient: {
-    type: 'linear',
-    startPoint: { x: '50%', y: '0%' },
-    endPoint: { x: '50%', y: '100%' },
-    colors: [
-      { color: '#000', offset: 0.0},
-      { color: '#333', offset: 0.5 },
-      { color: '#666', offset: 0.75 },
-      { color: '#999', offset: 1.0 }
-    ]
-  },
-  tableViewGradient: {
-    type: 'linear',
-    startPoint: { x: '50%', y: '0%' },
-    endPoint: { x: '50%', y: '100%' },
-    colors: [
-      { color: '#000', offset: 0.0},
-      { color: '#999', offset: 1.0}
-    ]
-  },
-  headerGradient:{
-    type: 'linear',
-    startPoint: { x: '50%', y: '0%' },
-    endPoint: { x: '50%', y: '100%' },
-    colors: [
-      { color: '#000', offset: 0.0},
-      { color: '#333', offset: 0.1 },
-      { color: '#333', offset: 0.95},
-      { color: '#000', offset: 1.0 }
-    ]
-  },
-
-  tableViewWhiteGradient: {
-    type: 'linear',
-    startPoint: { x: '50%', y: '0%' },
-    endPoint: { x: '50%', y: '100%' },
-    colors: [
-      { color: '#DDD', offset: 0.0},
-      { color: '#FFF', offset: 0.1},
-      { color: '#FFF', offset: 0.9},
-      { color: '#DDD', offset: 1.0}
-    ]
-  }
-
+  uiIcon:'KS_nav_ui.png'
 
 };
 var prop = {
   win: {
     backgroundColor:theme.backgroundColor,
+    backButtonTitle:'戻る',
     barColor:theme.barColor,
     tabBarHidden:true,
     navBarHidden:false
@@ -67,13 +24,9 @@ var prop = {
     backButtonTitle:'戻る',
     title:'',
     barColor:theme.barColor,
-    tabBarHidden:true
+    tabBarHidden:true,
+    navBarHidden:false
   },
-  tweetWindow:{
-    backgroundColor:theme.backgroundColor,
-    title:'新規tweet',
-    tabBarHidden:true
- },
   label : {
     color:'#333',
     textAlign:theme.textAlign,
@@ -84,10 +37,10 @@ var prop = {
     font:{
       fontSize:12
     },
-    left:75,
+    left:20,
     color:'#000',
     top:30,
-    width:200,
+    width:230,
     height:40
   },
   entry:{
@@ -96,9 +49,9 @@ var prop = {
       fontSize:16
     },
     color:'#000',
-    left:65,
+    left:5,
     top:10,
-    width:200,
+    width:240,
     height:20
   },
   updateTime:{
@@ -106,9 +59,9 @@ var prop = {
       fontSize:10
     },
     color:'#666',
-    left:270,
+    left:260,
     top:10,
-    width:40,
+    width:50,
     height:40
   },
   bloggerName:{
@@ -144,23 +97,21 @@ var prop = {
   tableView:{
     backgroundColor:'#ededed',
     separatorColor: '#999',
-    moved: false,
     zIndex:2,
-    borderRadius:10,
     width:310,
     left:5,
-    top:5
+    top:50
   },
   loadOlderEntryRow:{
     borderWidth:1,
     backgroundColor:'#222',
-    height:40,
+    height:120,
     width:'auto'
   },
   reloadLabel:{
     width:200,
-    height:30,
-    top:0,
+    height:40,
+    top:20,
     left:80,
     color:"#898989",
     font:{
@@ -187,7 +138,7 @@ var prop = {
     width:'auto',
     borderWidth:1,
     borderColor:'#ededed',
-    height:100
+    height:80
   },
 
   webViewLabel:{
@@ -203,7 +154,7 @@ var prop = {
   },
   webViewHeaderContainer:{
     backgroundColor:'#333',
-    top:0,
+    top:40,
     left:0,
     width:320,
     height:80,
@@ -211,7 +162,7 @@ var prop = {
   },
   webViewContainer:{
     backgroundColor:'#CCC',
-    top:60,
+    top:120,
     left:0,
     width:320,
     height:480,
@@ -220,14 +171,11 @@ var prop = {
     moved:false
   },
   webView:{
-    top:65,
+    top:120,
     left:0,
     zIndex:5,
 
     width:320
-  },
-  closeBtn:{
-    title:'閉じる'
   },
   navBtn:{
     width:30,
@@ -240,9 +188,10 @@ var prop = {
     systemButton: Titanium.UI.iPhone.SystemButton.REFRESH
   },
   backBtn:{
-    width:60,
-    height:30,
-    title:'戻る'
+    systemButton: Titanium.UI.iPhone.SystemButton.BOOKMARKS
+  },
+  doneBtn:{
+    systemButton: Titanium.UI.iPhone.SystemButton.DONE
   },
   composeBtn:{
     width:60,
@@ -259,31 +208,7 @@ var prop = {
     height:25,
     systemButton: Titanium.UI.iPhone.SystemButton.BOOKMARKS
   },
-  switchBtn:{
-    left:100,
-    value:false,
-    titleOn:'購読する',
-    titleOff: '購読しない'
-  },
-  // tableView refresh function
-  border:{
-    backgroundColor:"#576c89",
-    height:2,
-    bottom:0
-  },
-  tableHeader:{
-    backgroundGradient:theme.headerGradient,
-    width:320,
-    height:100,
-    zIndex:2,
-    top:0,
-    left:0
-  },
-  tableHooter:{
-    backgroundColor:"#996666",
-    width:320,
-    height:60
-  },
+
   lightCommentBtn:{
     left:50,
     width:25,

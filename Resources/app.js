@@ -19,7 +19,8 @@ myApps.controller = require('controller/main');
     row.addEventListener('click',function(e){
       myApps.controller.selectBlogger(e.row.userid);
 
-      myApps.window.entry.toolBar = require('ui/toolBar').init(e.row.blogTitle);
+      myApps.window.entry.toolBar = require('ui/toolBar').init(e.row.userid,e.row.blogTitle);
+
       myApps.window.entry.add(myApps.window.entry.toolBar);
       myApps.window.entry.add(myApps.ui.actInd);
       myApps.window.entry.open({

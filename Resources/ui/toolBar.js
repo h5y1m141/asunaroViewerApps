@@ -1,5 +1,5 @@
 var exports = {
-  init:function(/* String */ title){
+  init:function(/* String */  userid, /* String */ title){
     var $$ = require('ui/styles').prop;
 
     var backBtn = Titanium.UI.createButton($$.backBtn);
@@ -17,21 +17,24 @@ var exports = {
     var refreshBtn  = Titanium.UI.createButton($$.refreshBtn);
 
     refreshBtn.addEventListener('click', function(e) {
-      myApps.ui.actInd.show();
-      myApps.contoller.updateEntries();
+      myApps.controller.updateEntries();
     });
     var blogTitle = Ti.UI.createLabel({
-      textAlign:1,  // 1で中央揃えになる
+      textAlign:0,  //0:左揃え、 1:中央揃え、2：右揃え
       text:title,
-      width:230,
+      width:200,
       color:'#FFF',
       font:{
-        fontSize:16
+        fontSize:14
       }
     });
-
+    var bloggerIcon = Ti.UI.createImageView({
+      width:30,
+      height:30,
+      image:'/ui/images/' + userid + '.gif'
+    });
     var toolBar = Ti.UI.iOS.createToolbar({
-      items:[backBtn,blogTitle,refreshBtn],
+      items:[backBtn,bloggerIcon,blogTitle,refreshBtn],
       top:0,
       left:0,
       barColor:'#222',
