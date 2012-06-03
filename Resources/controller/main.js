@@ -1,6 +1,14 @@
 myApps.entries = require('model/entries');
 var exports = {
   selectBlogger:function(/* string */ blogger){
+    // 以前に選択したブロガーの情報が残ることがあるため一度リセット
+    var blankRow = Ti.UI.createTableViewRow();
+    var blankRows = [];
+    blankRows.push(blankRow);
+    myApps.ui.mainTable.setData(blankRows,{
+          animated:false
+    });
+
     myApps.entries.load(blogger,function(entries){
       var rows = [];
       for(var i=0;i<entries.length;i++){
@@ -38,6 +46,7 @@ var exports = {
     });
   },
   oldEntries:function(){
+    myApps.ui.actInd.show();
     var last_index = myApps.ui.mainTable.data[0].rows.length - 2;
     var baseDate = convertDataFormat(myApps.ui.mainTable.data[0].rows[last_index].data.post_date);
 
@@ -59,10 +68,15 @@ var exports = {
     });
   },
   updateEntries:function(){
+    myApps.ui.actInd.show();
     var lastupdate = convertDataFormat(myApps.ui.mainTable.data[0].rows[0].data.post_date);
     var blogger = myApps.ui.mainTable.data[0].rows[0].data.blogger;
 
     myApps.entries.loadLastUpdateEntry(blogger,lastupdate,function(entries){
+      // 最新エントリ取得済の場合にはすぐにIndicatorを非表示にする
+      if(entries.length===0){
+        myApps.ui.actInd.hide();
+      }
       for(var i=0;i<entries.length;i++){
         var entry = entries[i];
         Ti.API.info('count is:'+i+ entries[i].title);
