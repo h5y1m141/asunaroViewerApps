@@ -31,6 +31,7 @@ myApps.controller = require('controller/main');
         animated:false
     });
   }
+
   myApps.window.entry.add(myApps.ui.mainTable);
   myApps.window.main.add(myApps.ui.bloggerTable);
   myApps.ui.actInd = require('ui/actInd').init();
