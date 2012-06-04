@@ -24,17 +24,18 @@ var exports = {
 
     // 2033-05-18 12:33:20 +0900(unixitmeだと2000000000 ) よりも最新エントリは存在しないので
     // 決め打ち
-    var url = "http://h5y1m141.info/entry/" + blogger + "/date/older/2000000000";
+    var url = "http://asunaroblog.info/entry/" + blogger + "/date/older/2000000000";
     httpClient(url,callback);
 
   },
   loadLastUpdateEntry:function(/* string */ blogger,/* date */ lastupdate, /* function */callback){
-    var url = "http://h5y1m141.info/entry/" + blogger + "/date/newer/" + lastupdate;
+    var url = "http://asunaroblog.info/entry/" + blogger + "/date/newer/" + lastupdate;
+    Ti.API.info('loadLastUpdateEntry' + url);
     httpClient(url,callback);
 
   },
   loadOldEntry:function(/* string */ blogger,/* date */ baseDate, /* function */callback){
-    var url = "http://h5y1m141.info/entry/" + blogger + "/date/older/" + baseDate;
+    var url = "http://asunaroblog.info/entry/" + blogger + "/date/older/" + baseDate;
     httpClient(url,callback);
   }
 };
@@ -64,34 +65,37 @@ function httpClient(url,callback){
     var xhr = Ti.Network.createHTTPClient();
     xhr.open('GET',url);
     xhr.onload = function(){
-      var res = JSON.parse(this.responseText);
-      var result = sorted(res);
-      var localCollection = jsondb.factory('localJSONDB', 'blogDB');
-      for(var i=0;i<result.length;i++){
+      if(this.responseText=='<h1>Internal Server Error</h1>'){
+        var dummy = [];
+        callback(dummy);
+      }else{
+        var res = JSON.parse(this.responseText);
+        var result = sorted(res);
+        var localCollection = jsondb.factory('localJSONDB', 'blogDB');
+        for(var i=0;i<result.length;i++){
 
-        var localCache = localCollection.find({
-          permalink:{$eq:result[i].permalink}
-        });
-
-        if(localCache.length >=1){
-          Ti.API.info('entry title '+result[i].title+ 'already stored');
-        }else{
-          localCollection.save({
-            permalink:result[i].permalink,
-            html_body:result[i].html_body,
-            blogger:result[i].blogger,
-            post_date:result[i].post_date,
-            title:result[i].title
+          var localCache = localCollection.find({
+            permalink:{$eq:result[i].permalink}
           });
-          localCollection.ensureIndex({'post_date':1});
-          localCollection.commit();
-          Ti.API.info('stored cache!! entry title is:'+result[i].title);
+
+          if(localCache.length >=1){
+            Ti.API.info('entry title '+result[i].title+ 'already stored');
+          }else{
+            localCollection.save({
+              permalink:result[i].permalink,
+              html_body:result[i].html_body,
+              blogger:result[i].blogger,
+              post_date:result[i].post_date,
+              title:result[i].title
+            });
+            localCollection.ensureIndex({'post_date':1});
+            localCollection.commit();
+            Ti.API.info('stored cache!! entry title is:'+result[i].title);
+          }
         }
-
-
-
+        callback(result);
       }
-      callback(result);
+
     };
     xhr.error = function(){
       var dialog = Ti.UI.createAlertDialog({
