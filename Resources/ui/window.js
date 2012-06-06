@@ -11,7 +11,12 @@ var exports = {
     return win;
   },
   createEntryDetailWindow :function(){
-    var win = Titanium.UI.createWindow($$.win);
+    var win = Titanium.UI.createWindow({
+      backButtonTitle:'戻る',
+      title:'test',
+      barColor:'#222'
+    });
+
     return win;
   }
 };

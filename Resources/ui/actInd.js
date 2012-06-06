@@ -1,9 +1,10 @@
 var exports = {
   init:function(){
     var actInd  = Titanium.UI.createActivityIndicator({
-      zIndex:10,
-      top:50,
+      zIndex:15,
+      top:100,
       height:55,
+      left:100,
       width:'auto',
       backgroundColor:'#000',
       color:'#fff',

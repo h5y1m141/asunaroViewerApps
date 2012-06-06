@@ -1,6 +1,10 @@
-#Fri Feb 03 08:20:56 JST 2012
+#Wed Jun 06 21:18:59 JST 2012
 eclipse.preferences.version=1
 provisioning_profiles/development/0CC0298D-231B-4D09-BD5F-1A2392AC988E/appid=jp.co.pasonatech.blog.asunaroViewerApps
 provisioning_profiles/development/0CC0298D-231B-4D09-BD5F-1A2392AC988E/filepath=/Users/hoyamada/Downloads/asunaroViewerApps.mobileprovision
 provisioning_profiles/development/0CC0298D-231B-4D09-BD5F-1A2392AC988E/name=asunaroViewerApps
 provisioning_profiles/development/0CC0298D-231B-4D09-BD5F-1A2392AC988E/uuid=0CC0298D-231B-4D09-BD5F-1A2392AC988E
+provisioning_profiles/distribution/49485451-897E-45D0-94C0-C267BDEFF13C/appid=jp.co.pasonatech.blog.asunaroViewerApps
+provisioning_profiles/distribution/49485451-897E-45D0-94C0-C267BDEFF13C/filepath=/Users/hoyamada/Library/MobileDevice/Provisioning Profiles/49485451-897E-45D0-94C0-C267BDEFF13C.mobileprovision
+provisioning_profiles/distribution/49485451-897E-45D0-94C0-C267BDEFF13C/name=asunaroViewerAppsDistribution
+provisioning_profiles/distribution/49485451-897E-45D0-94C0-C267BDEFF13C/uuid=49485451-897E-45D0-94C0-C267BDEFF13C

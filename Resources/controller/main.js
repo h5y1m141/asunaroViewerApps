@@ -34,6 +34,7 @@ var exports = {
   latestEntries:function(){
     var blogger = myApps.ui.mainTable.data[0].rows[0].data.blogger;
     myApps.entries.loadLatest(blogger,function(entries){
+
       for(var i=0;i<entries.length;i++){
         var entry = entries[i];
         var row = myApps.tableView.createEntryRow(entry);
@@ -52,6 +53,11 @@ var exports = {
 
     var blogger = myApps.ui.mainTable.data[0].rows[0].data.blogger;
     myApps.entries.loadOldEntry(blogger,baseDate,function(entries){
+      // 既にエントリ読み込み済のケースはすぐにIndicator非表示
+      if(entries.length===0){
+        myApps.ui.actInd.hide();
+      }
+
       // 古いエントリを読み込んだ場合、配列の先頭に一番最新のエントリが
       // 格納されているためそのまま順番に処理をしてTableViewの末尾に
       // 追記すると意図した順番にならないため並べかえが必須
@@ -68,26 +74,31 @@ var exports = {
     });
   },
   updateEntries:function(){
-    myApps.ui.actInd.show();
-    var lastupdate = convertDataFormat(myApps.ui.mainTable.data[0].rows[0].data.post_date);
-    var blogger = myApps.ui.mainTable.data[0].rows[0].data.blogger;
 
-    myApps.entries.loadLastUpdateEntry(blogger,lastupdate,function(entries){
-      // 最新エントリ取得済の場合にはすぐにIndicatorを非表示にする
-      if(entries.length===0){
+    if(myApps.ui.mainTable.getIndex() >= 1){
+      var lastupdate = convertDataFormat(myApps.ui.mainTable.data[0].rows[0].data.post_date);
+      var blogger = myApps.ui.mainTable.data[0].rows[0].data.blogger;
+      myApps.ui.actInd.show();
+      myApps.entries.loadLastUpdateEntry(blogger,lastupdate,function(entries){
+        // 最新エントリ取得済の場合にはすぐにIndicatorを非表示にする
+
+        if(entries.length===0){
+          myApps.ui.actInd.hide();
+        }
+        for(var i=0;i<entries.length;i++){
+          var entry = entries[i];
+          Ti.API.info('count is:'+i+ entries[i].title);
+          var row = myApps.tableView.createEntryRow(entry);
+          myApps.ui.mainTable.insertRowBefore(0,row,{
+            animated:true,
+            animationStyle:Titanium.UI.iPhone.RowAnimationStyle.DOWN
+          });
+        }
         myApps.ui.actInd.hide();
-      }
-      for(var i=0;i<entries.length;i++){
-        var entry = entries[i];
-        Ti.API.info('count is:'+i+ entries[i].title);
-        var row = myApps.tableView.createEntryRow(entry);
-        myApps.ui.mainTable.insertRowBefore(0,row,{
-          animated:true,
-          animationStyle:Titanium.UI.iPhone.RowAnimationStyle.DOWN
-        });
-      }
+      });
+    }else{
       myApps.ui.actInd.hide();
-    });
+    }
   }
 };
 

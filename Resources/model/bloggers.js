@@ -102,7 +102,24 @@ var bloggers = [
     blogTitle:'キャリア形成のお手伝い',
     frequency:2,
     description:'あなたのキャリア形成のライフプランナーとなるべく日々気づいたことをお届けします。'
+  },
+  {
+    name:'藤原　真由美',
+    userid:'fujiwara',
+    twitterid:'milano2009',
+    blogTitle:'人は見たものしか信じない',
+    frequency:2,
+    description:'米国半導体メーカーに23年勤務し、独立しました。人生はいつでもやり直しできると信じています。二足のわらじ、三足のわらじもはけるはず。出会いに感謝して、わくわくしながら毎日を送りたいです。'
+  },
+  {
+    name:'堀川　貴満',
+    userid:'horikawa',
+    twitterid:'null',
+    blogTitle:'チェケラッ！',
+    frequency:2,
+    description:'あすなろBLOGプロデューサー堀Pが最新動向やネタをご紹介します'
   }
+
 ];
 var _ = require('lib/underscore')._;
 var value = _.chain(bloggers)
